@@ -120,7 +120,7 @@ class full_leaves extends Controller
 
 
     function total_leave_working_days() {
-        $this->setOutputMode(NORMAL);
+        
         if (isset($_POST['startDateLeave']) and isset($_POST['endDateLeave'])) {
             $from = $_POST['startDateLeave'];
             $to = $_POST['endDateLeave'];
@@ -134,80 +134,88 @@ class full_leaves extends Controller
         $year_last_date=$year."-12-31";
         
         $emId = $_POST['emId'];
-        //echo dateDiffCount($from,$to)-(countWeekendDays(strtotime($from),strtotime($to),$weekend)+holidayCount($from,$to,$weekend));
-        //echo $this->dateDiffCount($from, $to);
+       
         $total_day = $this->dateDiffCount($from, $to);
         $f_date = date('Y-m-d', strtotime($from));
         $t_date = date('Y-m-d', strtotime($to));
         $start_time = strtotime($f_date);
         $end_time = strtotime($t_date);
-        $holiday_chek=$this->holidayCheck($f_date,$t_date,$emId);
-        $total_weekend = $this->weekendCount($start_time, $end_time, $emId);
-        $total_holiday = $this->holidayCount($f_date,$t_date,$emId);
+        // $holiday_chek=$this->holidayCheck($f_date,$t_date,$emId);
+         $total_weekend = $this->weekendCount($start_time, $end_time,$emId);
+        // $total_holiday = $this->holidayCount($f_date,$t_date,$emId);
+        //$total_holiday = $this->holidayCount($f_date, $t_date, $emId);
+
         
-//        if($holiday_chek>=2){
-//            $net_leave_day = ($total_day+1) - ($total_weekend + $total_holiday);
-//        }else{
-//            $net_leave_day = $total_day - ($total_weekend + $total_holiday);
-//        }
-        
-//         if($holiday_chek>=2){
-//            $net_leave_day = ($total_day+1) - ($total_weekend + $total_holiday);
-//        }else if(!empty($total_weekend)){
-//            $net_leave_day = $total_day;
-//        }else if(!empty($total_holiday)){
-//            $net_leave_day = $total_day;
-//        }
+
         
         
-        if($holiday_chek>=2){
-            $net_leave_day = ($total_day+1) - ($total_weekend + $total_holiday);
-        }else if(!empty($total_weekend)){
-            $net_leave_day = $total_day;
-        }else if(!empty($total_holiday)){
-            $net_leave_day = $total_day;
-        }else{
-            $net_leave_day = $total_day;
-        }
+      
+         $leave_type = $_POST['leave_type'];
+         $leave_type_info = leavetypes::findOrFail($leave_type);
+         
+        // $type = $this->m_common->get_row_array('leaveType', array('id' => $leave_type), '*');
+     
+        // $sql="select sum(leaveDay) as leaveDay from leaves where leave_type='$leave_type' and employeeId=".$emId." and status!='Rejected' and (startDateLeave>='$year_first_date' and endDateLeave<='$year_last_date' )";
+        // $leave_availed = $leave = $this->m_common->customeQuery($sql);
+
+        $leave_availed = leaves::where('leave_type', $leave_type)
+                            ->where('employeeId', $emId)
+                            ->where('status', 'Approved')
+                            ->select(DB::raw('sum(leaveDay) AS total_leave_days'))
+                            ->get();
+
+      // $leave_availed->whereBetween('orders.date', [strtotime($start_date), strtotime($end_date)]);
         
-    //    $year = date('Y');
-        
-        
-        $leave_type = $this->input->post('leave_type');
-        $type = $this->m_common->get_row_array('leaveType', array('id' => $leave_type), '*');
-     //   $leave_availed = $leave = $this->m_common->get_row_array('leaves', array('leave_type' => $leave_type, 'employeeId' => $emId, 'status' => "Approved", 'year' => $year), 'sum(leaveDay) as leaveDay');
-        $sql="select sum(leaveDay) as leaveDay from leaves where leave_type='$leave_type' and employeeId=".$emId." and status!='Rejected' and (startDateLeave>='$year_first_date' and endDateLeave<='$year_last_date' )";
-        $leave_availed = $leave = $this->m_common->customeQuery($sql);
-        if($type[0]['short_name']=="CL"){
-            $casual_leave_deduction=$this->m_common->get_row_array('absent_reduce',array('employeeId'=>$emId,'year'=>$year),'sum(cl_deduction) as cl_deduction');
-            if(!empty($casual_leave_deduction)){
-                $due_leave = $type[0]['allowedLeave'] - ($leave_availed[0]['leaveDay']+$casual_leave_deduction[0]['cl_deduction']);
-            }else{
-                $due_leave = $type[0]['allowedLeave'] - $leave_availed[0]['leaveDay'];
-            }
-        }else if($type[0]['short_name']=="ML"){
-            $medical_leave_deduction=$this->m_common->get_row_array('absent_reduce',array('employeeId'=>$emId,'year'=>$year),'sum(ml_deduction) as ml_deduction');
-            if(!empty($medical_leave_deduction)){
-                $due_leave = $type[0]['allowedLeave'] - ($leave_availed[0]['leaveDay']+$medical_leave_deduction[0]['ml_deduction']);
-            }else{
-                $due_leave = $type[0]['allowedLeave'] - $leave_availed[0]['leaveDay'];
-            }
-        }else{
-            $due_leave = $type[0]['allowedLeave'] - $leave_availed[0]['leaveDay'];
-        }
+
+        $balance=$leave_type_info->allowedLeave-$leave_availed[0]->total_leave_days;
+
+        $net_total_days=$total_day-$total_weekend;
+
         $msg = array();
-        if($type[0]['short_name']=="CPL"){
+
+
+        if($net_total_days<=$balance){
             $msg['msg'] = 'success';
         }else{
-           if($due_leave >= $net_leave_day){
-                $msg['msg'] = 'success';
-           }else{
-                $msg['msg'] = 'failed';
-           } 
+            $msg['msg'] = 'failure';
         }
-        $msg['leaveDay'] = $net_leave_day;
+        
+        $msg['leaveDay'] =$net_total_days;
         echo json_encode($msg);
     }
 
+
+    function dateDiffCount($from, $to) {
+        $date1 = date_create($to);
+        $date2 = date_create($from);
+        $diff = date_diff($date1, $date2);
+        return abs($diff->format("%R%a")) + 1;
+    }
+
+
+    function weekendCount($start_time, $end_time, $emId=false) {
+        //$employee_info = $this->m_common->get_row_array('v_employee', array('id' => $emId), '*');
+        $weekend ="Friday";
+        $iter = 24 * 60 * 60; // whole day in seconds
+        $count = 0; // keep a count of Sats & Suns
+
+        for ($i = $start_time; $i <= $end_time; $i = $i + $iter) {
+            if (date("l", $i) == $weekend) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
+
+    function holidayCount($from, $to, $emId) {
+        $company_info = $this->m_common->get_row_array('v_employee', array('id' => $emId), '*');
+        $company_id = $company_info[0]['company'];
+        $sql = "SELECT count(*) as total from holiday where company in (" . $company_id . ") and the_date between '$from' and '$to' and category='Govt Holiday' ";
+        $govt_holiday = $this->m_common->customeQuery($sql);
+        $sql_others = "SELECT count(*) as total from holiday where company in (" . $company_id . ") and the_date between '$from' and '$to' and category='Others' ";
+        $others_holiday = $this->m_common->customeQuery($sql_others);
+        return $govt_holiday[0]['total'] + $others_holiday[0]['total'];
+    }
 
 }

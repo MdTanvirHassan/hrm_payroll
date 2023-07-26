@@ -77,7 +77,7 @@
                       <div class="form-group col-4">
                         <label for="status">status</label>
                         <input type="text" class="form-control" id="status" name="status" placeholder="Enter status" readonly>
-                        <p id="statusError" class="text-danger"></p>
+                        <!-- <p id="statusError" class="text-danger"></p> -->
                       </div>
 
             </div>
@@ -113,7 +113,7 @@ function validateForm() {
     { id: "startDateLeave", name: "Start Date Leave" },
     { id: "endDateLeave", name: "End Date Leave" },
     { id: "leave_reason", name: "Leave Reason" },
-    { id: "status", name: "Status" }
+    // { id: "status", name: "Status" }
   ];
 
   var isValid = true;
@@ -143,7 +143,7 @@ function validateForm() {
         var startDate =$('#startDateLeave').val();
         var endDate =$('#endDateLeave').val();
 
-        var em_Id = $('#applicant_employee_id').val();
+        var em_Id = $('#employeeId').val();
         var leave_types = $('#leave_type').val();
         
 
@@ -155,7 +155,10 @@ function validateForm() {
         var data = {'startDateLeave': startDate, 'endDateLeave': endDate, 'emId': em_Id, 'leave_type': leave_types}
         
         $.ajax({
-            url: '',
+          headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
+            url: "{{ route('total_leave_working_days') }}",
             data: data,
             method: 'POST',
             dataType: 'json',
@@ -181,17 +184,17 @@ function validateForm() {
 
 
 
-    function calculateLeaveDays() {
-        const startDate = new Date(document.getElementById('startDateLeave').value);
-        const endDate = new Date(document.getElementById('endDateLeave').value);
+    // function calculateLeaveDays_() {
+    //     const startDate = new Date(document.getElementById('startDateLeave').value);
+    //     const endDate = new Date(document.getElementById('endDateLeave').value);
 
-        // Calculate the difference in days
-        const oneDay = 24 * 60 * 60 * 1000; // milliseconds in one day
-        const diffInDays = Math.round((endDate - startDate) / oneDay) + 1;
+    //     // Calculate the difference in days
+    //     const oneDay = 24 * 60 * 60 * 1000; // milliseconds in one day
+    //     const diffInDays = Math.round((endDate - startDate) / oneDay) + 1;
         
-        // Update the leaveDay field value
-        document.getElementById('leaveDay').value = diffInDays;
-    }
+    //     // Update the leaveDay field value
+    //     document.getElementById('leaveDay').value = diffInDays;
+    // }
 
     // Attach the function to the change event of the start and end date inputs
   //  document.getElementById('startDateLeave').addEventListener('change', calculateLeaveDays);

@@ -94,7 +94,7 @@ Route::get('/view_full_leave/{id}', 'full_leaves@view_full_leave')->name('view_f
 Route::post('/update_full_leave', 'full_leaves@update')->name('update_full_leave');
 Route::get('/full_leave_delete/{id}', 'full_leaves@destroy')->name('full_leave_delete');
 
-Route::get('/total_leave_working_days', 'full_leaves@total_leave_working_days')->name('total_leave_working_days');
+Route::post('/total_leave_working_days', 'full_leaves@total_leave_working_days')->name('total_leave_working_days');
 
 
 
