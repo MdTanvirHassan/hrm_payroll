@@ -88,7 +88,12 @@ class salary extends Controller
     public function view_salary(Request $request, $id)
     {
         $salary_info = employeesalaries::findOrFail($id);
-        return view('settings.employeesalaries.view_salary', compact('salary_info'));
+        $employee_info = Db::table('employees')->select('employees.*')->get();
+        $salary_details = employeesalaries::join('employees', 'employeesalaries.employeeId', '=', 'employees.id')
+        ->join('designations', 'employees.designation', '=', 'designations.id')
+        ->select('employeesalaries.*', 'employees.id', 'employees.name as em_name', 'employees.employeeId','employees.designation','employees.department','employees.salary','employees.company','designations.desig_name')->get();
+
+        return view('payroll.salary.view_salary', compact('salary_info', 'employee_info', 'salary_details'));
     }
 
 

@@ -142,7 +142,7 @@
                         <!-- /.card-body -->
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success">Update</button>
-                            <a href="{{ route('bank_list') }}" class="btn btn-danger">Go Back</a>
+                            <a href="{{ route('salary_list') }}" class="btn btn-danger">Go Back</a>
                         </div>
                     </form>
                 </div>
