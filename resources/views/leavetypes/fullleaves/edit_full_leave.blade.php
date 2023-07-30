@@ -75,13 +75,13 @@
             </div>
             <div class="form-group col-4">
               <label for="leaveDay">Leave Day</label>
-              <input type="text" class="form-control" id="leaveDay" name="leaveDay" placeholder="Enter leaveDay" value='{{ $leave_info->leaveDay }}' readonly>
+              <input type="text" class="form-control" id="leaveDay" name="leaveDay" placeholder="Enter leaveDay" value='{{ $leave_info->leaveDay }}' >
               <p id="leaveDayError" class="text-danger"></p>
             </div>
             <div class="form-group col-4">
               <label for="status">status</label>
-              <input type="text" class="form-control" id="status" name="status" placeholder="Enter status" value='{{ $leave_info->status }}'>
-              <p id="statusError" class="text-danger"></p>
+              <input type="text" class="form-control" id="status" name="status" placeholder="Enter status" value='{{ $leave_info->status }}' readonly>
+              <!-- <p id="statusError" class="text-danger"></p> -->
             </div>
 
             </div>
@@ -128,7 +128,7 @@
               { id: "startDateLeave", name: "Start Date Leave" },
               { id: "endDateLeave", name: "End Date Leave" },
               { id: "leave_reason", name: "Leave Reason" },
-              { id: "status", name: "Status" }
+              // { id: "status", name: "Status" }
             ];
 
             var isValid = true;
@@ -168,6 +168,50 @@
     // Attach the function to the change event of the start and end date inputs
     document.getElementById('startDateLeave').addEventListener('change', calculateLeaveDays);
     document.getElementById('endDateLeave').addEventListener('change', calculateLeaveDays);
+</script>
+
+<script>
+    function calculateLeaveDays() {
+        var startDate =$('#startDateLeave').val();
+        var endDate =$('#endDateLeave').val();
+
+        var em_Id = $('#employeeId').val();
+        var leave_types = $('#leave_type').val();
+        
+
+        // Calculate the difference in days
+        var oneDay = 24 * 60 * 60 * 1000; // milliseconds in one day
+        var diffInDays = Math.round((endDate - startDate) / oneDay) + 1;
+       
+
+        var data = {'startDateLeave': startDate, 'endDateLeave': endDate, 'emId': em_Id, 'leave_type': leave_types}
+        
+        $.ajax({
+          headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+             },
+            url: "{{ route('total_leave_working_days') }}",
+            data: data,
+            method: 'POST',
+            dataType: 'json',
+            success: function (msg) {
+               
+                 if(msg.msg=='success'){
+                    $('#leaveDay').val(msg.leaveDay);
+                    
+                   
+                    //$('input[type="button"]').removeAttr('disabled');
+                }else{
+                    alert('You have already applied for this type of leave.Please select another leave type');
+                    $('#startDateLeave').val('');
+                    $('#endDateLeave').val('');
+                    $('#leaveDay').val('');
+                    
+                    //$('#btn_submit').prop("disabled", true);
+                }
+            }
+        })
+    }
 </script>
 
 

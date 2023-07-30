@@ -188,6 +188,49 @@
             </ul>
           </li>
 
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                PAYROLL
+                <i class="fas fa-angle-left right"></i>
+                <!-- <span class="badge badge-info right">6</span> -->
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{{route('salary_list')}}"  class="nav-link" >
+                  <i class="far fa-circle nav-icon text-white"></i>
+                  <p>Salary</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('salary_list')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon text-warning"  ></i>
+                  <p>Others</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="pages/layout/top-nav.html" class="nav-link">
+                  <i class="far fa-circle nav-icon text-info"></i>
+                  <p>Others</p>
+                </a>
+              </li>
+
+               <li class="nav-item">
+                <a href="pages/layout/top-nav.html" class="nav-link">
+                  <i class="far fa-circle nav-icon text-success"></i>
+                  <p>Others</p>
+                </a>
+              </li>
+
+             
+              
+            </ul>
+          </li>
+
           
         </ul>
       </nav>
