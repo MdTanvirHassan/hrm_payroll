@@ -73,7 +73,7 @@
                           <td>
                             <a href="{{route('view_salary', $salary->id)}}"><button type="button" class="btn  btn-sm btn-primary">View</button></a>
                             <a href="{{route('edit_salary', $salary->id)}}"><button type="button" class="btn  btn-sm btn-success">Edit</button></a>
-                            <a href="{{route('salary_delete', $salary->id)}} "onclick="return confirm('Are you sure!')"><button type="button" class="btn  btn-sm btn-danger">Delete</button></a>
+                            <a href="{{route('salary_delete', $salary->id)}} " onclick="return confirm('Are you sure!')"><button type="button" class="btn  btn-sm btn-danger">Delete</button></a>
                           </td>
                         </tr>
                     <?php 

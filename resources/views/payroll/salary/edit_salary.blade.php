@@ -20,7 +20,7 @@
    <div class="container-fluid">
         <div class="row">
             <!-- left column -->
-            <div class="col-md-8 m-auto">
+            <div class="col-md-12 m-auto">
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
@@ -55,9 +55,11 @@
                                 <div class="form-group col-4">
                                     <label for="designation">Designation</label>
                                     <select class="form-select form-control" id="designation" name="designation" required>
-                                        <option>Select Designation</option>
-                                        @foreach ($salary_info as $salary)
-                                        <option value="{{ $salary->id }}">{{ $salary->desig_name }}</option>
+                                        <option value="">Select Designation</option>
+                                        @foreach ($salary_details as $salary)
+                                            <option value="{{ $salary->id }}" {{ $salary_info->designation == $salary->id ? 'selected' : '' }}>
+                                                {{ $salary->desig_name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                     <p id="designationError" class="text-danger"></p>

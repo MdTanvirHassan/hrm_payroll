@@ -10,14 +10,15 @@ class salary extends Controller
 {
     public function index()
     {
+        $salary_info = employeesalaries::all();
         $salary = employeesalaries::join('employees', 'employeesalaries.employeeId', '=', 'employees.id')
                                     ->join('designations', 'employees.designation', '=', 'designations.id')
                                     // ->select('employees.*', 'designations.id', 'designations.desig_name')
-                                    ->select('employeesalaries.*', 'employees.id', 'employees.name as em_name', 'employees.employeeId','employees.designation','employees.department','employees.salary','employees.company','designations.desig_name')
+                                    ->select('employeesalaries.*', 'employees.id as em_id', 'employees.name as em_name', 'employees.employeeId','employees.designation','employees.department','employees.salary','employees.company','designations.desig_name')
                                     
                                      ->get();
 
-        return view('payroll.salary.salary_list', compact('salary'));
+        return view('payroll.salary.salary_list', compact('salary', 'salary_info'));
     }
 
     public function add_salary()
@@ -60,7 +61,7 @@ class salary extends Controller
         ->join('designations', 'employees.designation', '=', 'designations.id')
         ->select('employeesalaries.*', 'employees.id', 'employees.name as em_name', 'employees.employeeId','employees.designation','employees.department','employees.salary','employees.company','designations.desig_name')->get();
        
-        return view('payroll.salary.edit_salary', compact('salary_info', 'employee_info'));
+        return view('payroll.salary.edit_salary', compact('salary_info', 'employee_info', 'salary_details'));
     }
 
     public function update(Request $request)
