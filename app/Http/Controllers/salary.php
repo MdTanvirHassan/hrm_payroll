@@ -71,12 +71,13 @@ class salary extends Controller
         // print_r($salary);
         // exit;
 
-        $salary->name = $request->name;
-        $salary->branch_name = $request->branch_name;
-        $salary->salary_type = $request->salary_type;
-        $salary->company_account = $request->company_account;
-        $salary->company_id = $request->company_id;
-        $salary->routing_number = $request->routing_number;
+        $salary->employeeId = $request->employeeId;
+        $salary->gross = $request->gross;
+        $salary->others = $request->others;
+        $salary->net_gross = $request->net_gross;
+        $salary->Stamp = $request->Stamp;
+        $salary->Tax = $request->Tax;
+        $salary->security_amount = $request->security_amount;
        
 
         $salary->save();

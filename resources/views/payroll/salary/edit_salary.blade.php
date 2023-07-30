@@ -43,12 +43,12 @@
                                         </option>
                                         @endforeach
                                     </select>
-                                    <!-- <p id="employeeIdError" class="text-danger"></p> -->
+                                    <p id="employeeIdError" class="text-danger"></p>
                                 </div>
 
                                 <div class="form-group col-4">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ $salary_info->em_name }}">
                                     <!-- <p id="nameError" class="text-danger"></p> -->
                                 </div>
 
@@ -73,18 +73,18 @@
               
                     <div class="form-group col-4">
                         <label for="gross">Gross Salary</label>
-                        <input type="number" class="form-control" id="gross" name="gross" placeholder="Enter gross salary" >
+                        <input type="number" class="form-control" id="gross" name="gross" placeholder="Enter gross salary" value="{{ $salary_info->gross }}">
                         <p id="grossError" class="text-danger"></p>
                     </div>
                     <div class="form-group col-4">
                         <label for="others">Others Allowance</label>
-                        <input type="number" class="form-control" id="others" name="others" placeholder="Enter Others Allowance" >
+                        <input type="number" class="form-control" id="others" name="others" placeholder="Enter Others Allowance" value="{{ $salary_info->Others }}">
                         <p id="othersError" class="text-danger"></p>
                     </div>
 
                       <div class="form-group col-4">
                         <label for="net_gross">Net Gross Benefit</label>
-                        <input type="number" class="form-control" id="net_gross" name="net_gross" placeholder="Enter net gross benifit" >
+                        <input type="number" class="form-control" id="net_gross" name="net_gross" placeholder="Enter net gross benifit" value="{{ $salary_info->net_gross }}">
                         
                       </div>
 
@@ -96,18 +96,18 @@
               
                     <div class="form-group col-4">
                         <label for="stamp">Stamp</label>
-                        <input type="number" class="form-control" id="stamp" name="Stamp" placeholder="Enter stamp" >
+                        <input type="number" class="form-control" id="stamp" name="Stamp" placeholder="Enter stamp" value="{{ $salary_info->Stamp }}">
                         <p id="stampError" class="text-danger"></p>
                     </div>
                     <div class="form-group col-4">
                         <label for="tax">Tax</label>
-                        <input type="number" class="form-control" id="tax" name="Tax" placeholder="Enter Tax" >
+                        <input type="number" class="form-control" id="tax" name="Tax" placeholder="Enter Tax" value="{{ $salary_info->Tax }}">
                         <p id="othersError" class="text-danger"></p>
                     </div>
 
                       <div class="form-group col-4">
                         <label for="security_amount">Security Amount</label>
-                        <input type="number" class="form-control" id="security_amount" name="security_amount" placeholder="Enter security amount" >
+                        <input type="number" class="form-control" id="security_amount" name="security_amount" placeholder="Enter security amount" value="{{ $salary_info->security_amount }}">
                         
                       </div>
 
