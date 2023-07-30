@@ -140,10 +140,9 @@ class full_leaves extends Controller
         $t_date = date('Y-m-d', strtotime($to));
         $start_time = strtotime($f_date);
         $end_time = strtotime($t_date);
-        // $holiday_chek=$this->holidayCheck($f_date,$t_date,$emId);
+       // $holiday_chek=$this->holidayCheck($f_date,$t_date,$emId);
          $total_weekend = $this->weekendCount($start_time, $end_time,$emId);
-        // $total_holiday = $this->holidayCount($f_date,$t_date,$emId);
-        //$total_holiday = $this->holidayCount($f_date, $t_date, $emId);
+        $total_holiday = $this->holidayCount($f_date,$t_date,$emId);
 
         
 
@@ -169,7 +168,7 @@ class full_leaves extends Controller
 
         $balance=$leave_type_info->allowedLeave-$leave_availed[0]->total_leave_days;
 
-        $net_total_days=$total_day-$total_weekend;
+        $net_total_days = $total_day - $total_weekend - $total_holiday;
 
         $msg = array();
 
@@ -207,15 +206,38 @@ class full_leaves extends Controller
         return $count;
     }
 
+    public function holidayCount($from, $to, $emId)
+    {
+       // $company_info = DB::table('holidays')->where('id', $emId)->first();
+        // if (!$company_info) {
+        //     return 0;
+        // }
+        // $company_id = $company_info->company;
+        
+        $govt_holiday = DB::table('holidays')
+        // ->where('company', $company_id)
+            ->whereBetween('the_date', [$from, $to])
+             ->where('category', 'Govt Holiday')
+            ->count();
+            
+        $others_holiday = DB::table('holidays')
+        // ->where('company', $company_id)
+            ->whereBetween('the_date', [$from, $to])
+             ->where('category', 'Others')
+            ->count();
 
-    function holidayCount($from, $to, $emId) {
-        $company_info = $this->m_common->get_row_array('v_employee', array('id' => $emId), '*');
-        $company_id = $company_info[0]['company'];
-        $sql = "SELECT count(*) as total from holiday where company in (" . $company_id . ") and the_date between '$from' and '$to' and category='Govt Holiday' ";
-        $govt_holiday = $this->m_common->customeQuery($sql);
-        $sql_others = "SELECT count(*) as total from holiday where company in (" . $company_id . ") and the_date between '$from' and '$to' and category='Others' ";
-        $others_holiday = $this->m_common->customeQuery($sql_others);
-        return $govt_holiday[0]['total'] + $others_holiday[0]['total'];
+        return $govt_holiday + $others_holiday;
     }
+
+
+    // function holidayCount($from, $to, $emId) {
+    //     $company_info = $this->m_common->get_row_array('v_employee', array('id' => $emId), '*');
+    //     $company_id = $company_info[0]['company'];
+    //     $sql = "SELECT count(*) as total from holiday where company in (" . $company_id . ") and the_date between '$from' and '$to' and category='Govt Holiday' ";
+    //     $govt_holiday = $this->m_common->customeQuery($sql);
+    //     $sql_others = "SELECT count(*) as total from holiday where company in (" . $company_id . ") and the_date between '$from' and '$to' and category='Others' ";
+    //     $others_holiday = $this->m_common->customeQuery($sql_others);
+    //     return $govt_holiday[0]['total'] + $others_holiday[0]['total'];
+    // }
 
 }

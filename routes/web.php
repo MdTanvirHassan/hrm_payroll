@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FullCalenderController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +97,12 @@ Route::post('/update_full_leave', 'full_leaves@update')->name('update_full_leave
 Route::get('/full_leave_delete/{id}', 'full_leaves@destroy')->name('full_leave_delete');
 
 Route::post('/total_leave_working_days', 'full_leaves@total_leave_working_days')->name('total_leave_working_days');
+Route::get('/holiday-count/{from}/{to}/{emId}', 'full_leaves@holidayCount')->name('holidayCount');
+
+
+Route::get('full-calender', [FullCalenderController::class, 'index'])->name('show_calander');
+
+Route::post('full-calender/action', [FullCalenderController::class, 'action'])->name('action_calander');
 
 
 

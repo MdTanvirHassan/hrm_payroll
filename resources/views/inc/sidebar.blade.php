@@ -136,7 +136,7 @@
               </li>
 
                <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{ route('show_calander') }}" class="nav-link">
                   <i class="far fa-circle nav-icon text-warning"></i>
                   <p>Holiday Calendar</p>
                 </a>
