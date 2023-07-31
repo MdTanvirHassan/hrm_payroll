@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\employeesalaries;
+use App\Models\employees;
+use App\Models\banks;
 use DB;
 
 class salary extends Controller
@@ -23,30 +25,73 @@ class salary extends Controller
 
     public function add_salary()
     {
-        $employee_info = Db::table('employees')->select('employees.*')->get();
-        $salary_info = employeesalaries::join('employees', 'employeesalaries.employeeId', '=', 'employees.id')
-                                    ->join('designations', 'employees.designation', '=', 'designations.id')
-                                    // ->select('employees.*', 'designations.id', 'designations.desig_name')
-                                    ->select('employeesalaries.*', 'employees.id', 'employees.name as em_name', 'employees.employeeId','employees.designation','employees.department','employees.salary','employees.company','designations.desig_name')->get();
+        $employee_info = DB::table('employees')
+                    ->join('designations', 'employees.designation', '=', 'designations.id')
+                    // ->join('banks', 'employees.id', '=', 'banks.id')
+                     ->select('employees.*','designations.desig_name')
+                    ->get();
+        $bank_info = banks::all();
 
-        return view('payroll.salary.add_salary', compact('salary_info','employee_info'));
+                                
+
+        return view('payroll.salary.add_salary', compact('employee_info','bank_info'));
     }
 
     public function store(Request $request)
     {
+        
         $data = array();
         $data['employeeId'] = $request['employeeId'];
-        // $data['name'] = $request['name'];
-        //$data['designation'] = $request['designation'];
-        $data['gross'] = $request['gross'];
-        $data['others'] = $request['others'];
-        $data['net_gross'] = $request['net_gross'];
-        $data['Stamp'] = $request['Stamp'];
-        $data['Tax'] = $request['Tax'];
-        $data['security_amount'] = $request['security_amount'];
-        // $data['net_gross'] = $request['net_gross'];
-        // $data['net_gross'] = $request['net_gross'];
-        employeesalaries::insert($data);
+
+        $employee_info = employees::findOrFail($request['employeeId']);
+
+        $pre_salary_info=employeesalaries::where('employeeId',$request['employeeId'])->first();
+       // dd($pre_salary_info);
+        // print_r($pre_salary_info);
+        // exit;
+
+        if(!empty($pre_salary_info)){
+            $pre_salary_info->gross = $request['gross'];
+            $pre_salary_info->others = $request['others'];
+            $pre_salary_info->net_gross = $request['net_gross'];
+            $pre_salary_info->Stamp = $request['Stamp'];
+            $pre_salary_info->Tax = $request['Tax'];
+            $pre_salary_info->security_amount = $request['security_amount'];
+            $pre_salary_info->save();
+
+            // $data['employeeId'] = $request['employeeId'];
+            // $data['gross'] = $request['gross'];
+            // $data['others'] = $request['others'];
+            // $data['net_gross'] = $request['net_gross'];
+            // $data['Stamp'] = $request['Stamp'];
+            // $data['Tax'] = $request['Tax'];
+            // $data['security_amount'] = $request['security_amount'];
+            
+            // employeesalaries::insert($data);
+
+        }else{
+            $data['employeeId'] = $request['employeeId'];
+            $data['gross'] = $request['gross'];
+            $data['others'] = $request['others'];
+            $data['net_gross'] = $request['net_gross'];
+            $data['Stamp'] = $request['Stamp'];
+            $data['Tax'] = $request['Tax'];
+            $data['security_amount'] = $request['security_amount'];
+            
+            employeesalaries::insert($data);
+        }
+
+
+        
+        $employee_info->distribution_type = $request['distribution_type'];
+        $employee_info->bank_portion = $request['bank_portion'];
+        $employee_info->cash_portion = $request['cash_portion'];
+        $employee_info->bank_id = $request['bank_id'];
+        $employee_info->bank_acct_no = $request['bank_acct_no'];
+        $employee_info->salary_held_up = $request['salary_held_up'];
+        $employee_info->save();
+        
+
         return redirect()->route('salary_list')->with('message','Added successfully!');
         //return back();
     }

@@ -50,10 +50,10 @@ class full_leaves extends Controller
         ]);
     
         // Calculate the number of leave days
-        $startDate = Carbon::parse($request->startDateLeave);
-        $endDate = Carbon::parse($request->endDateLeave);
-        $daysDifference = $endDate->diffInDays($startDate);
-        $leaveDay = $daysDifference + 1; // Include both start and end dates
+        // $startDate = Carbon::parse($request->startDateLeave);
+        // $endDate = Carbon::parse($request->endDateLeave);
+        // $daysDifference = $endDate->diffInDays($startDate);
+        // $leaveDay = $daysDifference + 1; // Include both start and end dates
     
         // Now you can save the data to the database
         $data = [
@@ -61,7 +61,7 @@ class full_leaves extends Controller
             'leave_type' => $request->leave_type,
             'startDateLeave' => $request->startDateLeave,
             'endDateLeave' => $request->endDateLeave,
-            'leaveDay' => $leaveDay, // Use the calculated value
+            'leaveDay' => $request->leaveDay, // Use the calculated value
             'leave_reason' => $request->leave_reason,
             'status' => $request->status,
         ];

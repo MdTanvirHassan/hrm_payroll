@@ -38,7 +38,7 @@
                 <select class="form-select form-control" id="employeeId" name="employeeId" required onchange="updateName()">
                     <option>Select Employee</option>
                     @foreach ($employee_info as $employee)
-                        <option value="{{ $employee->id }}">{{ $employee->employeeId }}</option>
+                        <option value="{{ $employee->id }}">{{ $employee->name }}({{$employee->employeeId}})</option>
                     @endforeach
                 </select>
                 <p id="employeeIdError" class="text-danger"></p>
@@ -50,17 +50,14 @@
                   <p id="nameError" class="text-danger"></p>
               </div>
 
+              <div class="form-group col-4">
+                  <label for="desig_name">Designation</label>
+                  <input type="text" class="form-control" id="desig_name" name="desig_name" placeholder="Enter designation" >
+                  <p id="desig_nameError" class="text-danger"></p>
+              </div>
 
-                  <div class="form-group col-4">
-                    <label for="name">Name</label>
-                    <select class="form-select form-control" id="designation" name='designation' required>
-                            <option >Select Designation </option>
-                            @foreach ($salary_info as $salary)
-                          <option value="{{ $salary->id }}">{{ $salary->desig_name }}</option>
-                           @endforeach
-                          </select>
-                          <p id="designationError" class="text-danger"></p>
-                  </div>
+
+                
                   
 
             </div>
@@ -116,19 +113,55 @@
             <div class="d-flex">
               
                     <div class="form-group col-4">
-                        <label for="distribution">Distribution Type</label>
-                        <input type="number" class="form-control" id="distribution" name="distribution" placeholder="Enter distribution" >
-                        <!-- <p id="stampError" class="text-danger"></p> -->
+                        <label for="distribution_type">Distribution Type</label>
+                        <select class="form-select form-control" id="distribution_type" name='distribution_type' required>
+                            <option >Select distribution type </option>
+                           
+                            <option value="fixed">Fixed</option>
+                            <option value="percent">Percentage</option>
+                          
+                          </select>
+                          
                     </div>
                     <div class="form-group col-4">
-                        <label for="bank">Bank</label>
-                        <input type="number" class="form-control" id="bank" name="bank" placeholder="Enter Bank" >
+                        <label for="bank_portion">Bank Amount</label>
+                        <input type="number" class="form-control" id="bank_portion" name="bank_portion" placeholder="Enter Bank Amount" >
                         <!-- <p id="othersError" class="text-danger"></p> -->
                     </div>
 
                       <div class="form-group col-4">
-                        <label for="cash">Cash</label>
-                        <input type="number" class="form-control" id="cash" name="cash" placeholder="Enter Cash amount" >
+                        <label for="cash_portion">Cash</label>
+                        <input type="number" class="form-control" id="cash_portion" name="cash_portion" placeholder="Enter Cash amount" >
+                        
+                      </div>
+
+            </div>
+
+            <div class="d-flex">
+              
+            <div class="form-group col-4">
+                <label for="bank_id">Bank</label>
+                <select class="form-select form-control" id="bank_id" name='bank_id' required>
+                    <option>Select Bank</option>
+                    @foreach ($bank_info as $bank)
+                        <option value="{{ $bank->id }}">{{ $bank->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+                    <div class="form-group col-4">
+                        <label for="bank_acct_no">Bank Account No.</label>
+                        <input type="number" class="form-control" id="bank_acct_no" name="bank_acct_no" placeholder="Enter Bank" >
+                        <!-- <p id="bank_acct_noError" class="text-danger"></p> -->
+                    </div>
+
+                      <div class="form-group col-4">
+                        <label for="salary_held_up">Salary Held Up</label>
+                        <select class="form-select form-control" id="salary_held_up" name='salary_held_up' required>
+                            <option value="">Select salary held up</option>
+                            
+                                <option value="no">No</option>
+                                <option value="yes">Yes</option>
+                        </select>
                         
                       </div>
 
@@ -187,6 +220,7 @@ function validateForm() {
     function updateName() {
         var selectElement = document.getElementById('employeeId');
         var nameInput = document.getElementById('name');
+        var designationInput = document.getElementById('desig_name');
 
         // Get the selected employeeId and the corresponding name from the data passed to the view
         var selectedEmployeeId = selectElement.value;
@@ -198,6 +232,7 @@ function validateForm() {
         });
 
         nameInput.value = selectedEmployee ? selectedEmployee.name : '';
+        designationInput.value = selectedEmployee ? selectedEmployee.desig_name : '';
     }
 
    
