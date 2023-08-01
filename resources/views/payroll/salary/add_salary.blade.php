@@ -67,6 +67,27 @@
             <div class="d-flex">
               
                     <div class="form-group col-4">
+                        <label for="basic_percent">Basic Percent %</label>
+                        <input type="number" class="form-control" id="basic_percent" name="basic_percent" placeholder="Enter basic percent" value='60' readonly>
+                        <!-- <p id="grossError" class="text-danger"></p> -->
+                    </div>
+                    <div class="form-group col-4">
+                        <label for="house_rent_percent">House rent percent %</label>
+                        <input type="number" class="form-control" id="house_rent_percent" name="house_rent_percent" placeholder="Enter house_rent_percent" value='50' readonly>
+                        <!-- <p id="othersError" class="text-danger"></p> -->
+                    </div>
+
+                      <div class="form-group col-4">
+                        <label for="medical_percent">medical percent %</label>
+                        <input type="number" class="form-control" id="medical_percent" name="medical_percent" placeholder="Enter medical percent" value="10" readonly>
+                        
+                      </div>
+
+            </div>
+
+            <div class="d-flex">
+              
+                    <div class="form-group col-4">
                         <label for="gross">Gross Salary</label>
                         <input type="number" class="form-control" id="gross" name="gross" placeholder="Enter gross salary" >
                         <p id="grossError" class="text-danger"></p>

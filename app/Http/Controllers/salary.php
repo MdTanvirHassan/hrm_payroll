@@ -27,12 +27,9 @@ class salary extends Controller
     {
         $employee_info = DB::table('employees')
                     ->join('designations', 'employees.designation', '=', 'designations.id')
-                    // ->join('banks', 'employees.id', '=', 'banks.id')
                      ->select('employees.*','designations.desig_name')
                     ->get();
-        $bank_info = banks::all();
-
-                                
+        $bank_info = banks::all();                        
 
         return view('payroll.salary.add_salary', compact('employee_info','bank_info'));
     }
@@ -55,6 +52,18 @@ class salary extends Controller
             $pre_salary_info->Stamp = $request['Stamp'];
             $pre_salary_info->Tax = $request['Tax'];
             $pre_salary_info->security_amount = $request['security_amount'];
+
+            $gross = $request['gross'];
+            $basicPercent = $request['basic_percent'];
+            $houseRentPercent = $request['house_rent_percent'];
+            $medicalPercent = $request['medical_percent'];
+
+            $pre_salary_info->Basic=$basic = round(($gross * $basicPercent) / 100, 2);
+            $pre_salary_info->HouseRent=$h_rent = round(($basic * $houseRentPercent) / 100, 2);
+            $pre_salary_info->Medical=$medical = round(($basic * $medicalPercent) / 100, 2);
+            $pre_salary_info->Transport=$transport = $gross - ($basic + $h_rent + $medical);
+
+
             $pre_salary_info->save();
 
         }else{
@@ -65,6 +74,17 @@ class salary extends Controller
             $data['Stamp'] = $request['Stamp'];
             $data['Tax'] = $request['Tax'];
             $data['security_amount'] = $request['security_amount'];
+
+
+            $gross = $request['gross'];
+            $basicPercent = $request['basic_percent'];
+            $houseRentPercent = $request['house_rent_percent'];
+            $medicalPercent = $request['medical_percent'];
+
+            $data['Basic'] =$basic = round(($gross * $basicPercent) / 100, 2);
+            $data['HouseRent'] =$h_rent = round(($basic * $houseRentPercent) / 100, 2);
+            $data['Medical'] =$medical = round(($basic * $medicalPercent) / 100, 2);
+            $data['Transport'] =$transport = $gross - ($basic + $h_rent + $medical);
             
             employeesalaries::insert($data);
         }
@@ -76,6 +96,11 @@ class salary extends Controller
         $employee_info->bank_acct_no = $request['bank_acct_no'];
         $employee_info->salary_held_up = $request['salary_held_up'];
         $employee_info->save();
+
+
+        
+
+        
         
 
         return redirect()->route('salary_list')->with('message','Added successfully!');
@@ -108,10 +133,19 @@ class salary extends Controller
         $salary->Stamp = $request->Stamp;
         $salary->Tax = $request->Tax;
         $salary->security_amount = $request->security_amount;
-         $salary->save();
+        $gross = $request['gross'];
+        $basicPercent = $request['basic_percent'];
+        $houseRentPercent = $request['house_rent_percent'];
+        $medicalPercent = $request['medical_percent'];
 
-         $employee_info = employees::findOrFail($request['employeeId']);
-         $employee_info->distribution_type = $request['distribution_type'];
+        $salary->Basic=$basic = round(($gross * $basicPercent) / 100, 2);
+        $salary->HouseRent=$h_rent = round(($basic * $houseRentPercent) / 100, 2);
+        $salary->Medical=$medical = round(($basic * $medicalPercent) / 100, 2);
+        $salary->Transport=$transport = $gross - ($basic + $h_rent + $medical);
+        $salary->save();
+
+        $employee_info = employees::findOrFail($request['employeeId']);
+        $employee_info->distribution_type = $request['distribution_type'];
         $employee_info->bank_portion = $request['bank_portion'];
         $employee_info->cash_portion = $request['cash_portion'];
         $employee_info->bank_id = $request['bank_id'];
@@ -125,12 +159,16 @@ class salary extends Controller
     public function view_salary(Request $request, $id)
     {
         $salary_info = employeesalaries::findOrFail($id);
-        $employee_info = Db::table('employees')->select('employees.*')->get();
-        $salary_details = employeesalaries::join('employees', 'employeesalaries.employeeId', '=', 'employees.id')
-        ->join('designations', 'employees.designation', '=', 'designations.id')
-        ->select('employeesalaries.*', 'employees.id', 'employees.name as em_name', 'employees.employeeId','employees.designation','employees.department','employees.salary','employees.company','designations.desig_name')->get();
 
-        return view('payroll.salary.view_salary', compact('salary_info', 'employee_info', 'salary_details'));
+        $employee_bank_info = employees::where('id',$salary_info->employeeId)->first();
+
+        $employee_info = DB::table('employees')
+                    ->join('designations', 'employees.designation', '=', 'designations.id')
+                     ->select('employees.*','designations.desig_name')
+                    ->get();
+        $bank_info = banks::all();
+
+        return view('payroll.salary.view_salary', compact('salary_info', 'employee_info','employee_bank_info', 'bank_info'));
     }
 
 
