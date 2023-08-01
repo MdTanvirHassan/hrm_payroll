@@ -18,6 +18,7 @@
 
 @section('main_content')
    <div class="container-fluid">
+   <input type="hidden" class="form-control" id="id" name="id" value="{{ $salary_info->id }}">
         <div class="row">
             <!-- left column -->
             <div class="col-md-12 m-auto">
@@ -39,36 +40,41 @@
                                         <option>Select Employee</option>
                                         @foreach ($employee_info as $employee)
                                         <option value="{{ $employee->id }}" {{ $salary_info->employeeId == $employee->employeeId ? 'selected' : '' }}>
-                                            {{ $employee->employeeId }}
+                                        {{ $employee->name }} ({{ $employee->employeeId }})
                                         </option>
                                         @endforeach
                                     </select>
                                     <p id="employeeIdError" class="text-danger"></p>
                                 </div>
+                                
 
                                 <div class="form-group col-4">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" value="{{ $salary_info->em_name }}">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" >
                                     <!-- <p id="nameError" class="text-danger"></p> -->
                                 </div>
 
+                                
+
+
+
                                 <div class="form-group col-4">
-                                    <label for="designation">Designation</label>
-                                    <select class="form-select form-control" id="designation" name="designation" required>
-                                        <option value="">Select Designation</option>
-                                        @foreach ($salary_details as $salary)
-                                            <option value="{{ $salary->id }}" {{ $salary_info->designation == $salary->id ? 'selected' : '' }}>
-                                                {{ $salary->desig_name }}
-                                            </option>
+                                    <label for="desig_name">Designation</label>
+                                    <select class="form-select form-control" id="desig_name" name="desig_name" required onchange="updateName()" disabled>
+                                        <option>Select Designation</option>
+                                        @foreach ($employee_info as $employee)
+                                        <option value="{{ $employee->id }}" {{ $salary_info->employeeId == $employee->employeeId ? 'selected' : '' }}>
+                                        {{ $employee->desig_name }}
+                                        </option>
                                         @endforeach
                                     </select>
-                                    <p id="designationError" class="text-danger"></p>
+                                    <p id="desig_nameError" class="text-danger"></p>
                                 </div>
                             </div>
 
 
             <h5 class="text-success">Benifit</h5>
-
+            
             <div class="d-flex">
               
                     <div class="form-group col-4">
@@ -115,28 +121,70 @@
 
             <h5 class="text-primary">Salary Distribution</h5>
 
+          
+            <input type="hidden" class="form-control" id="id" name="id" value="{{ $salary_info->id }}">
+
             <div class="d-flex">
               
                     <div class="form-group col-4">
-                        <label for="distribution">Distribution Type</label>
-                        <input type="number" class="form-control" id="distribution" name="distribution" placeholder="Enter distribution" >
-                        <!-- <p id="stampError" class="text-danger"></p> -->
+                        <label for="distribution_type">Distribution Type</label>
+                        <select class="form-select form-control" id="distribution_type" name='distribution_type' required>
+                            <option >Select distribution type </option>
+                            <option {{ $employee_bank_info->distribution_type === "fixed" ? "selected" : "" }} value="fixed">Fixed</option>
+                            <option {{ $employee_bank_info->distribution_type === "percent" ? "selected" : "" }} value="percent">Percentage</option>
+                          
+                          </select>
+                          
                     </div>
+                    
                     <div class="form-group col-4">
-                        <label for="bank">Bank</label>
-                        <input type="number" class="form-control" id="bank" name="bank" placeholder="Enter Bank" >
+                        <label for="bank_portion">Bank Amount</label>
+                        <input type="number" class="form-control" id="bank_portion" name="bank_portion" placeholder="Enter Bank Amount" value="{{ $employee_bank_info->bank_portion	 }}">
                         <!-- <p id="othersError" class="text-danger"></p> -->
                     </div>
 
                       <div class="form-group col-4">
-                        <label for="cash">Cash</label>
-                        <input type="number" class="form-control" id="cash" name="cash" placeholder="Enter Cash amount" >
+                        <label for="cash_portion">Cash</label>
+                        <input type="number" class="form-control" id="cash_portion" name="cash_portion" placeholder="Enter Cash amount" value="{{ $employee_bank_info->cash_portion }}">
                         
                       </div>
 
             </div>
 
-            
+            <div class="d-flex">
+              
+           
+                  <div class="form-group col-4">
+                      <label for="bank_id">Bank</label>
+                      <select class="form-select form-control" id="bank_id" name="bank_id" required>
+                          <option value="">Select Bank</option>
+                          @foreach ($bank_info as $bank)
+                              <option value="{{ $bank->id }}" {{ $employee_bank_info->bank_id == $bank->id ? 'selected' : '' }}>
+                                  {{ $bank->name }}
+                              </option>
+                          @endforeach
+                      </select>
+                  </div>
+
+                    <div class="form-group col-4">
+                        <label for="bank_acct_no">Bank Account No.</label>
+                        <input type="number" class="form-control" id="bank_acct_no" name="bank_acct_no" placeholder="Enter Bank" value="{{ $employee_bank_info->bank_acct_no }}">
+                        <!-- <p id="bank_acct_noError" class="text-danger"></p> -->
+                    </div>
+
+                      <div class="form-group col-4">
+                        <label for="salary_held_up">Salary Held Up</label>
+                        <select class="form-select form-control" id="salary_held_up" name='salary_held_up' required>
+                            <option value="">Select salary held up</option>
+                            <option {{ $employee_bank_info->salary_held_up === 'yes' ? 'selected' : '' }} value="yes">Yes</option>
+                            <option {{ $employee_bank_info->salary_held_up === 'no' ? 'selected' : '' }} value="no">No</option>
+                        </select>
+                        
+                      </div>
+
+            </div>
+
+          
             
           </div>
                         <!-- /.card-body -->
@@ -189,6 +237,7 @@ function validateForm() {
     function updateName() {
         var selectElement = document.getElementById('employeeId');
         var nameInput = document.getElementById('name');
+        var designationInput = document.getElementById('desig_name');
 
         // Get the selected employeeId and the corresponding name from the data passed to the view
         var selectedEmployeeId = selectElement.value;
@@ -200,6 +249,7 @@ function validateForm() {
         });
 
         nameInput.value = selectedEmployee ? selectedEmployee.name : '';
+        designationInput.value = selectedEmployee ? selectedEmployee.desig_name : '';
     }
 
    

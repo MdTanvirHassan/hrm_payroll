@@ -46,9 +46,7 @@ class salary extends Controller
         $employee_info = employees::findOrFail($request['employeeId']);
 
         $pre_salary_info=employeesalaries::where('employeeId',$request['employeeId'])->first();
-       // dd($pre_salary_info);
-        // print_r($pre_salary_info);
-        // exit;
+       
 
         if(!empty($pre_salary_info)){
             $pre_salary_info->gross = $request['gross'];
@@ -58,16 +56,6 @@ class salary extends Controller
             $pre_salary_info->Tax = $request['Tax'];
             $pre_salary_info->security_amount = $request['security_amount'];
             $pre_salary_info->save();
-
-            // $data['employeeId'] = $request['employeeId'];
-            // $data['gross'] = $request['gross'];
-            // $data['others'] = $request['others'];
-            // $data['net_gross'] = $request['net_gross'];
-            // $data['Stamp'] = $request['Stamp'];
-            // $data['Tax'] = $request['Tax'];
-            // $data['security_amount'] = $request['security_amount'];
-            
-            // employeesalaries::insert($data);
 
         }else{
             $data['employeeId'] = $request['employeeId'];
@@ -80,9 +68,7 @@ class salary extends Controller
             
             employeesalaries::insert($data);
         }
-
-
-        
+   
         $employee_info->distribution_type = $request['distribution_type'];
         $employee_info->bank_portion = $request['bank_portion'];
         $employee_info->cash_portion = $request['cash_portion'];
@@ -100,22 +86,21 @@ class salary extends Controller
     {
         $salary_info = employeesalaries::findOrFail($id);
 
-        $employee_info = Db::table('employees')->select('employees.*')->get();
+        $employee_bank_info = employees::where('id',$salary_info->employeeId)->first();
 
-        $salary_details = employeesalaries::join('employees', 'employeesalaries.employeeId', '=', 'employees.id')
-        ->join('designations', 'employees.designation', '=', 'designations.id')
-        ->select('employeesalaries.*', 'employees.id', 'employees.name as em_name', 'employees.employeeId','employees.designation','employees.department','employees.salary','employees.company','designations.desig_name')->get();
+        $employee_info = DB::table('employees')
+                    ->join('designations', 'employees.designation', '=', 'designations.id')
+                     ->select('employees.*','designations.desig_name')
+                    ->get();
+        $bank_info = banks::all();
        
-        return view('payroll.salary.edit_salary', compact('salary_info', 'employee_info', 'salary_details'));
+        return view('payroll.salary.edit_salary', compact('salary_info', 'employee_info','employee_bank_info', 'bank_info'));
     }
 
     public function update(Request $request)
     {
         $id = $request->id;
         $salary = employeesalaries::findOrFail($id);
-        // print_r($salary);
-        // exit;
-
         $salary->employeeId = $request->employeeId;
         $salary->gross = $request->gross;
         $salary->others = $request->others;
@@ -123,9 +108,16 @@ class salary extends Controller
         $salary->Stamp = $request->Stamp;
         $salary->Tax = $request->Tax;
         $salary->security_amount = $request->security_amount;
-       
+         $salary->save();
 
-        $salary->save();
+         $employee_info = employees::findOrFail($request['employeeId']);
+         $employee_info->distribution_type = $request['distribution_type'];
+        $employee_info->bank_portion = $request['bank_portion'];
+        $employee_info->cash_portion = $request['cash_portion'];
+        $employee_info->bank_id = $request['bank_id'];
+        $employee_info->bank_acct_no = $request['bank_acct_no'];
+        $employee_info->salary_held_up = $request['salary_held_up'];
+        $employee_info->save();
         return redirect()->route('salary_list')->with('message','Updated successfully!');
     }
 

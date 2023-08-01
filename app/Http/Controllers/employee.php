@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\employees;
 
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ class employee extends Controller
         $data['designation'] = $request['designation'];
         $data['department'] = $request['department'];
         $data['phone'] = $request['phone'];
-        employee::insert($data);
+        employees::insert($data);
         return redirect()->route('employee_list');
         // echo '<pre>';
         // print_r(employee::insert($data));
@@ -32,14 +33,14 @@ class employee extends Controller
 
     public function edit_employee(Request $request, $id)
     {    
-        $employee_info= employee::findOrFail($id);
+        $employee_info= employees::findOrFail($id);
         return view('employees.edit',compact('employee_info'));
     }
 
     public function update(Request $request)
     {  
         $id=$request->id;
-        $employee = employee::findOrFail($id);
+        $employee = employees::findOrFail($id);
         // print_r($employee);
         // exit;
         
@@ -57,14 +58,14 @@ class employee extends Controller
 
     public function view_employee(Request $request, $id)
     {    
-        $employee_info= employee::findOrFail($id);    
+        $employee_info= employees::findOrFail($id);    
         return view('employees.view',compact('employee_info'));
     }
 
 
     public function destroy($id)
     {
-        employee::destroy($id);
+        employees::destroy($id);
         return redirect()->route('employee_list');
     }
 }
