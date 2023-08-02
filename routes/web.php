@@ -123,4 +123,23 @@ Route::get('/view_salary/{id}', 'salary@view_salary')->name('view_salary');
 Route::post('/update_salary', 'salary@update')->name('update_salary');
 Route::get('/salary_delete/{id}', 'salary@destroy')->name('salary_delete');
 
+// HRM-PAYROLL->Salary_Arrear
+Route::get('/salary_arrear','salary_arrear@index')->name('salary_arrear_list');
+Route::get('/add_salary_arrear', 'salary_arrear@add_salary_arrear')->name('salary_arrear_add');
+Route::post('/add_salary_arrear_action', 'salary_arrear@store')->name('salary_arrear_add_action');
+Route::get('/edit_salary_arrear/{id}', 'salary_arrear@edit_salary_arrear')->name('edit_salary_arrear');
+Route::get('/view_salary_arrear/{id}', 'salary_arrear@view_salary_arrear')->name('view_salary_arrear');
+Route::post('/update_salary_arrear', 'salary_arrear@update')->name('update_salary_arrear');
+Route::get('/salary_arrear_delete/{id}', 'salary_arrear@destroy')->name('salary_arrear_delete');
+
+
+// HRM-PAYROLL->absent_payments
+Route::get('/absent_payments','absent_payments@index')->name('absent_payments_list');
+Route::get('/add_absent_payments', 'absent_payments@add_absent_payments')->name('absent_payments_add');
+Route::post('/add_absent_payments_action', 'absent_payments@store')->name('absent_payments_add_action');
+Route::get('/edit_absent_payments/{id}', 'absent_payments@edit_absent_payments')->name('edit_absent_payments');
+Route::get('/view_absent_payments/{id}', 'absent_payments@view_absent_payments')->name('view_absent_payments');
+Route::post('/update_absent_payments', 'absent_payments@update')->name('update_absent_payments');
+Route::get('/absent_payments_delete/{id}', 'absent_payments@destroy')->name('absent_payments_delete');
+
 

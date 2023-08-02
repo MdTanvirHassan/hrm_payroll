@@ -113,8 +113,7 @@ class salary extends Controller
 
         $employee_bank_info = employees::where('id',$salary_info->employeeId)->first();
 
-        $employee_info = DB::table('employees')
-                    ->join('designations', 'employees.designation', '=', 'designations.id')
+        $employee_info = employees::join('designations', 'employees.designation', '=', 'designations.id')
                      ->select('employees.*','designations.desig_name')
                     ->get();
         $bank_info = banks::all();

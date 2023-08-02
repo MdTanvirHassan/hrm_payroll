@@ -4,7 +4,7 @@
    <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Salary</h1>
+        <h1 class="m-0">Salary Info</h1>
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
@@ -50,8 +50,7 @@
 
                                 <div class="form-group col-4">
                                     <label for="name">Name</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" >
-                                    <!-- <p id="nameError" class="text-danger"></p> -->
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name"  value='{{ $salary_info->employeeId == $employee->employeeId ? $employee->name  : '' }}'>
                                 </div>
 
                                 
@@ -60,15 +59,8 @@
 
                                 <div class="form-group col-4">
                                     <label for="desig_name">Designation</label>
-                                    <select class="form-select form-control" id="desig_name" name="desig_name" required onchange="updateName()" disabled>
-                                        <option>Select Designation</option>
-                                        @foreach ($employee_info as $employee)
-                                        <option value="{{ $employee->id }}" {{ $salary_info->employeeId == $employee->employeeId ? 'selected' : '' }}>
-                                        {{ $employee->desig_name }}
-                                        </option>
-                                        @endforeach
-                                    </select>
-                                    <p id="desig_nameError" class="text-danger"></p>
+                                    <input type="text" class="form-control" id="desig_name" name="desig_name" placeholder="Enter desig_name" value='{{ $salary_info->employeeId == $employee->employeeId ?  $employee->desig_name : '' }}' >
+                                    
                                 </div>
                             </div>
 

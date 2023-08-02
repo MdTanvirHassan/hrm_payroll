@@ -205,24 +205,24 @@
                   <p>Salary</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{route('salary_list')}}" class="nav-link">
+              <!-- <li class="nav-item">
+                <a href="" class="nav-link">
                   <i class="far fa-circle nav-icon text-warning"  ></i>
                   <p>Others</p>
                 </a>
-              </li>
+              </li> -->
 
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{route('salary_arrear_list')}}" class="nav-link">
                   <i class="far fa-circle nav-icon text-info"></i>
-                  <p>Others</p>
+                  <p>Salary Arrear</p>
                 </a>
               </li>
 
                <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{route('absent_payments_list')}}" class="nav-link">
                   <i class="far fa-circle nav-icon text-success"></i>
-                  <p>Others</p>
+                  <p>Absent Payments</p>
                 </a>
               </li>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 24, 2023 at 09:48 PM
+-- Generation Time: Aug 02, 2023 at 08:44 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -269,7 +269,76 @@ CREATE TABLE `employees` (
 --
 
 INSERT INTO `employees` (`id`, `name`, `fatherName`, `motherName`, `employeeId`, `gender`, `department`, `section`, `sub_section`, `designation`, `shift`, `joinDate`, `dob`, `phone`, `permanentAddress`, `company`, `salary`, `grade`, `bloodGroup`, `workerType`, `email`, `maritial_status`, `photo`, `resume`, `qualification`, `ot_rate`, `key_skill`, `note`, `metarials`, `status`, `presentAddress`, `voterId`, `voterImage`, `weekend`, `mark`, `nationality`, `religion`, `confirmation`, `home_phone`, `office_phone`, `office_tnt1`, `office_tnt2`, `office_tnt3`, `tin_no`, `bank_acct_no`, `pabx`, `serialNo`, `meal_member_status`, `salary_unit`, `bank_id`, `resign_date`, `reason`, `rank`, `bank_portion`, `cash_portion`, `salary_held_up`, `one_punch`, `distribution_type`, `basic_percent`, `house_rent_percent`, `medical_percent`, `e_category`, `meal_deduction`, `user_name`, `first_approver_name`, `second_approver_name`, `third_approver_name`, `fourth_approver_name`, `shift_name`, `bonus_type`, `activationDate`, `is_approver`, `bonus_held_up`, `created_by`, `created_at`, `updated_by`, `updated_at`, `is_active`) VALUES
-(1, 'Tanvir', NULL, NULL, NULL, 'Male', 0, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1);
+(1, 'Tanvir', NULL, NULL, '1', 'Male', 2, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '963214785', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, 25000.00, 10000.00, 'no', NULL, 'fixed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-08-01 06:17:47', 1),
+(2, 'Hassan', NULL, NULL, '2', 'Male', 2, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '38', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, 0.00, 0.00, 'no', NULL, 'percent', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-31 04:21:17', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `employeesalaries`
+--
+
+CREATE TABLE `employeesalaries` (
+  `id` int(11) NOT NULL,
+  `employeeId` int(11) NOT NULL,
+  `Basic` decimal(10,2) DEFAULT NULL,
+  `dearness_allow` decimal(10,2) DEFAULT NULL,
+  `house_rent` decimal(10,2) DEFAULT NULL,
+  `special_allow` decimal(10,2) DEFAULT NULL,
+  `mobile_allow` decimal(10,2) DEFAULT NULL,
+  `incentive_allow` decimal(10,2) DEFAULT NULL,
+  `food_allow` decimal(10,2) DEFAULT NULL,
+  `performance_allow` decimal(10,2) DEFAULT NULL,
+  `ot_rate` decimal(10,2) DEFAULT NULL,
+  `salaryGrad` int(11) DEFAULT NULL,
+  `medical_allow` decimal(10,2) DEFAULT NULL,
+  `attendance_bonus` int(11) DEFAULT NULL,
+  `meal_deduction` decimal(10,2) DEFAULT NULL,
+  `house_deduction` decimal(10,2) DEFAULT NULL,
+  `transport_deduction` decimal(10,2) DEFAULT NULL,
+  `TDS` decimal(10,2) DEFAULT NULL,
+  `provident_fund` decimal(10,2) DEFAULT NULL,
+  `benefit_value` varchar(255) DEFAULT NULL,
+  `deduction_value` varchar(255) DEFAULT NULL,
+  `HouseRent` decimal(10,2) DEFAULT NULL,
+  `Medical` decimal(10,2) DEFAULT NULL,
+  `Transport` decimal(10,2) DEFAULT NULL,
+  `Others` int(11) DEFAULT NULL,
+  `Lunch` decimal(10,2) DEFAULT NULL,
+  `Stamp` decimal(10,2) DEFAULT NULL,
+  `submit` varchar(50) DEFAULT NULL,
+  `gross` decimal(10,2) DEFAULT NULL,
+  `Tax` decimal(10,2) DEFAULT NULL,
+  `net_gross` decimal(10,2) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `approver_id` int(11) DEFAULT NULL,
+  `security_amount` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employeesalaries`
+--
+
+INSERT INTO `employeesalaries` (`id`, `employeeId`, `Basic`, `dearness_allow`, `house_rent`, `special_allow`, `mobile_allow`, `incentive_allow`, `food_allow`, `performance_allow`, `ot_rate`, `salaryGrad`, `medical_allow`, `attendance_bonus`, `meal_deduction`, `house_deduction`, `transport_deduction`, `TDS`, `provident_fund`, `benefit_value`, `deduction_value`, `HouseRent`, `Medical`, `Transport`, `Others`, `Lunch`, `Stamp`, `submit`, `gross`, `Tax`, `net_gross`, `status`, `approver_id`, `security_amount`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(11, 1, 15000.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 7500.00, 1500.00, 1000.00, 2000, NULL, 1500.00, NULL, 25000.00, 700.00, 8000.00, NULL, NULL, 3000, NULL, NULL, '2023-08-02 00:37:14', NULL),
+(12, 2, 26.40, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 13.20, 2.64, 1.76, 33, NULL, 49.00, NULL, 44.00, 7.00, 66.00, NULL, NULL, 31, NULL, NULL, '2023-08-01 06:25:44', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `event`
+--
+
+CREATE TABLE `event` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `start` datetime DEFAULT NULL,
+  `end` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -286,6 +355,19 @@ CREATE TABLE `failed_jobs` (
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `festivals`
+--
+
+CREATE TABLE `festivals` (
+  `id` int(11) NOT NULL,
+  `f_name` varchar(30) NOT NULL,
+  `disbursement_date` date NOT NULL,
+  `year` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -308,6 +390,80 @@ CREATE TABLE `halfleaves` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `holidays`
+--
+
+CREATE TABLE `holidays` (
+  `id` int(11) NOT NULL,
+  `day` tinyint(4) DEFAULT NULL,
+  `startDate` date DEFAULT NULL,
+  `endDate` date DEFAULT NULL,
+  `category` varchar(150) DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `company` int(11) DEFAULT NULL,
+  `the_date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `holidays`
+--
+
+INSERT INTO `holidays` (`id`, `day`, `startDate`, `endDate`, `category`, `remarks`, `company`, `the_date`, `created_at`, `updated_at`) VALUES
+(1, 1, '2023-07-29', '2023-07-29', 'Govt Holiday', NULL, NULL, '2023-07-29', NULL, NULL),
+(2, 1, '2023-08-15', '2023-08-15', 'Govt Holiday', NULL, NULL, '2023-08-15', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `increments`
+--
+
+CREATE TABLE `increments` (
+  `id` int(11) NOT NULL,
+  `emId` int(11) NOT NULL,
+  `gross` int(11) DEFAULT NULL,
+  `Basic` decimal(10,2) DEFAULT NULL,
+  `HouseRent` decimal(10,2) DEFAULT NULL,
+  `Medical` decimal(10,2) DEFAULT NULL,
+  `Transport` decimal(10,2) DEFAULT NULL,
+  `Others` decimal(10,2) DEFAULT NULL,
+  `Stamp` decimal(10,2) DEFAULT NULL,
+  `Tax` decimal(10,2) DEFAULT NULL,
+  `increment_date` date DEFAULT NULL,
+  `created_date` date DEFAULT NULL,
+  `designation_id` int(11) DEFAULT NULL,
+  `designation_to` int(11) DEFAULT NULL,
+  `salary_increment_amount` decimal(10,2) DEFAULT NULL,
+  `others_increment_amount` decimal(10,2) DEFAULT NULL,
+  `net_gross` decimal(10,2) DEFAULT NULL,
+  `bank_amount` decimal(10,2) DEFAULT NULL,
+  `cash_amount` decimal(10,2) DEFAULT NULL,
+  `effective_month` varchar(50) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` date DEFAULT NULL,
+  `type` varchar(50) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `approver_id` int(11) DEFAULT NULL,
+  `companyId` int(11) DEFAULT NULL,
+  `total_increment_amount` decimal(10,2) DEFAULT NULL,
+  `approver_name` varchar(255) DEFAULT NULL,
+  `effective_date` date DEFAULT NULL,
+  `adjust_month` varchar(50) DEFAULT NULL,
+  `reject_reason` text DEFAULT NULL,
+  `first_approver_id` int(11) DEFAULT NULL,
+  `second_approver_id` int(11) DEFAULT NULL,
+  `third_approver_id` int(11) DEFAULT NULL,
+  `fourth_approver_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `leaves`
 --
 
@@ -319,7 +475,7 @@ CREATE TABLE `leaves` (
   `endDateLeave` date NOT NULL,
   `leaveDay` decimal(4,2) NOT NULL,
   `remarks` text DEFAULT NULL,
-  `status` varchar(30) NOT NULL DEFAULT 'Pending',
+  `status` varchar(30) DEFAULT 'Pending',
   `year` int(4) DEFAULT NULL,
   `applicant_designation` int(11) DEFAULT NULL,
   `applicant_department` int(11) DEFAULT NULL,
@@ -347,9 +503,13 @@ CREATE TABLE `leaves` (
 --
 
 INSERT INTO `leaves` (`id`, `employeeId`, `leave_type`, `startDateLeave`, `endDateLeave`, `leaveDay`, `remarks`, `status`, `year`, `applicant_designation`, `applicant_department`, `leave_reason`, `applicant_address`, `applicant_contact_no`, `applicant_name`, `responsibility_name`, `responsibilty_employee_id`, `responsibilty_designation`, `responsibility_contact_no`, `appliedDate`, `approver_name`, `approver_id`, `medical_doc`, `reject_reason`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 1, 1, '2023-07-25', '2023-07-26', 2.00, '1', 'Pending', NULL, NULL, NULL, 'N/A', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 1, 2, '2023-07-31', '2023-07-31', 0.50, NULL, 'Pending', NULL, NULL, NULL, 'Null', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-24 13:38:51'),
-(3, 1, 2, '2023-07-28', '2023-07-28', 0.50, NULL, 'Pending', NULL, NULL, NULL, 'Bolbo na', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+(1, 1, 1, '2023-07-25', '2023-07-27', 3.00, '1', 'Pending', NULL, NULL, NULL, 'N/A', NULL, '01925532372', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-25 00:08:16'),
+(2, 1, 2, '2023-07-31', '2023-07-31', 1.00, NULL, 'Pending', NULL, NULL, NULL, 'Null', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-25 00:09:09'),
+(3, 1, 1, '2023-07-28', '2023-07-31', 3.00, NULL, 'Pending', NULL, NULL, NULL, 'Bolbo na', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-24 23:33:34'),
+(4, 2, 4, '2023-07-26', '2023-08-05', 11.00, NULL, 'Pending', NULL, NULL, NULL, 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-25 00:09:27'),
+(5, 1, 2, '2023-07-27', '2023-07-27', 1.00, NULL, NULL, NULL, NULL, NULL, 'assd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 1, 1, '2023-07-27', '2023-07-30', 2.00, NULL, NULL, NULL, NULL, NULL, 'ss', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-30 22:42:21'),
+(10, 2, 2, '2023-07-27', '2023-07-30', 2.00, NULL, NULL, NULL, NULL, NULL, 'qede', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -375,8 +535,9 @@ CREATE TABLE `leavetypes` (
 --
 
 INSERT INTO `leavetypes` (`id`, `name`, `short_name`, `description`, `allowedLeave`, `created_by`, `created_at`, `updated_by`, `updated_at`, `is_active`) VALUES
-(1, 'Full leave', 'FL', 'Descriptions', 1, NULL, NULL, NULL, '2023-07-18 03:55:38', 1),
-(2, 'Half leave', 'HL', 'des', 1, NULL, NULL, NULL, NULL, 1);
+(1, 'Casual Leave', 'CL', 'Descriptions', 10, NULL, NULL, NULL, '2023-07-18 03:55:38', 1),
+(2, 'Personal Leave', 'PL', 'des', 10, NULL, NULL, NULL, NULL, 1),
+(4, 'Sick Leave', 'SL', 'des', 10, NULL, NULL, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -399,6 +560,56 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (2, '2014_10_12_100000_create_password_resets_table', 1),
 (3, '2019_08_19_000000_create_failed_jobs_table', 1),
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `movementregisterdeatials`
+--
+
+CREATE TABLE `movementregisterdeatials` (
+  `id` int(11) NOT NULL,
+  `date` date DEFAULT NULL,
+  `source` varchar(255) DEFAULT NULL,
+  `destination` varchar(255) DEFAULT NULL,
+  `reason` text DEFAULT NULL,
+  `start_time` datetime DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `movement_id` int(11) DEFAULT NULL,
+  `employeeId` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `movementregisters`
+--
+
+CREATE TABLE `movementregisters` (
+  `id` int(11) NOT NULL,
+  `employeeId` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `startTime` datetime DEFAULT NULL,
+  `endTime` datetime DEFAULT NULL,
+  `reason` text DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'Pending',
+  `approver_name` varchar(255) DEFAULT NULL,
+  `approver_id` int(11) DEFAULT NULL,
+  `fromDate` date DEFAULT NULL,
+  `toDate` date DEFAULT NULL,
+  `address` text DEFAULT NULL,
+  `task_status` varchar(100) DEFAULT NULL,
+  `remarks` text DEFAULT NULL,
+  `reject_reason` text DEFAULT NULL,
+  `first_approver_id` int(11) DEFAULT NULL,
+  `second_approver_id` int(11) DEFAULT NULL,
+  `third_approver_id` int(11) DEFAULT NULL,
+  `fourth_approver_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -429,6 +640,35 @@ CREATE TABLE `personal_access_tokens` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `salaryarrears`
+--
+
+CREATE TABLE `salaryarrears` (
+  `id` int(11) NOT NULL,
+  `emId` int(11) NOT NULL,
+  `adjust_month` varchar(30) DEFAULT NULL,
+  `amount` decimal(10,0) NOT NULL,
+  `companyId` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `payable_days` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `approver_name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `salaryarrears`
+--
+
+INSERT INTO `salaryarrears` (`id`, `emId`, `adjust_month`, `amount`, `companyId`, `created_by`, `updated_by`, `created_at`, `updated_at`, `payable_days`, `status`, `approver_name`) VALUES
+(1, 1, '2023-12', 10000, NULL, NULL, NULL, NULL, '2023-08-02 00:32:58', 10, NULL, NULL),
+(2, 2, '2023-08', 30000, NULL, NULL, NULL, NULL, NULL, 30, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -530,6 +770,30 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workprograms`
+--
+
+CREATE TABLE `workprograms` (
+  `id` int(11) NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `job` varchar(255) DEFAULT NULL,
+  `organization` int(11) DEFAULT NULL,
+  `venue` varchar(255) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `concern_type` varchar(255) DEFAULT NULL,
+  `concern_employee` int(11) DEFAULT NULL,
+  `others` varchar(255) DEFAULT NULL,
+  `deadline` date DEFAULT NULL,
+  `creatd_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -577,11 +841,41 @@ ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `employeesalaries`
+--
+ALTER TABLE `employeesalaries`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `event`
+--
+ALTER TABLE `event`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `festivals`
+--
+ALTER TABLE `festivals`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `holidays`
+--
+ALTER TABLE `holidays`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `increments`
+--
+ALTER TABLE `increments`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `leaves`
@@ -602,6 +896,18 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `movementregisterdeatials`
+--
+ALTER TABLE `movementregisterdeatials`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `movementregisters`
+--
+ALTER TABLE `movementregisters`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -614,6 +920,12 @@ ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
+
+--
+-- Indexes for table `salaryarrears`
+--
+ALTER TABLE `salaryarrears`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sections`
@@ -645,6 +957,12 @@ ALTER TABLE `subsections`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indexes for table `workprograms`
+--
+ALTER TABLE `workprograms`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -690,7 +1008,19 @@ ALTER TABLE `designations`
 -- AUTO_INCREMENT for table `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `employeesalaries`
+--
+ALTER TABLE `employeesalaries`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `event`
+--
+ALTER TABLE `event`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -699,16 +1029,28 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `holidays`
+--
+ALTER TABLE `holidays`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `increments`
+--
+ALTER TABLE `increments`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `leavetypes`
 --
 ALTER TABLE `leavetypes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -717,10 +1059,28 @@ ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `movementregisterdeatials`
+--
+ALTER TABLE `movementregisterdeatials`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `movementregisters`
+--
+ALTER TABLE `movementregisters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `salaryarrears`
+--
+ALTER TABLE `salaryarrears`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sections`
@@ -751,6 +1111,12 @@ ALTER TABLE `subsections`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `workprograms`
+--
+ALTER TABLE `workprograms`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
