@@ -184,8 +184,79 @@
               </li>
 
              
+              <li class="nav-item mx-3">
+            <a href="#" class="nav-link">
+              <i class="nav-icon text-info fas fa-copy"></i>
+              <p>
+                Leave's Report
+                <i class="fas fa-angle-left right"></i>
+                <span class="badge badge-success right">6</span>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+            
+              <li class="nav-item">
+                <a href="{{route('full_leave_list')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon text-danger"  ></i>
+                  <p>Leave Report</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('daily_leave_report_list') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon text-info"></i>
+                  <p>Daily Leave</p>
+                </a>
+              </li>
+
+               <li class="nav-item">
+                <a href="{{ route('daily_half_leave_report_list') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon text-success"></i>
+                  <p>Daily Half Leave</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('daily_short_leave_report_list') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon text-secondary"></i>
+                  <p>Daily Short Leave</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('monthly_leave_report_list') }}"  class="nav-link">
+                  <i class="far fa-circle nav-icon text-info"></i>
+                  <p>Monthly Leave</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('monthly_half_leave_report_list') }}"  class="nav-link">
+                  <i class="far fa-circle nav-icon text-success"></i>
+                  <p>Monthly Half Leave</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('monthly_short_leave_report_list') }}"  class="nav-link">
+                  <i class="far fa-circle nav-icon text-secondary"></i>
+                  <p>Monthly Short Leave</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="pages/layout/top-nav.html" class="nav-link">
+                  <i class="far fa-circle nav-icon text-white"></i>
+                  <p>Leave Register Report</p>
+                </a>
+              </li>
+
+
               
             </ul>
+          </li>
+            </ul>
+            
           </li>
 
 

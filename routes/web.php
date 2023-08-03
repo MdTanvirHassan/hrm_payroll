@@ -85,7 +85,7 @@ Route::post('/update_shift', 'shift@update')->name('update_shift');
 Route::get('/shift_delete/{id}', 'shift@destroy')->name('shift_delete');
 
 
-// Leave-Types
+//Leave Types-> Leave-Types
 Route::get('/leave','leavetype@index')->name('leave_list');
 Route::get('/add_leave', 'leavetype@add_leave')->name('leave_add');
 Route::post('/add_leave_action', 'leavetype@store')->name('leave_add_action');
@@ -95,7 +95,7 @@ Route::post('/update_leave', 'leavetype@update')->name('update_leave');
 Route::get('/leave_delete/{id}', 'leavetype@destroy')->name('leave_delete');
 
 
-// Full Leaves
+//Leave Types-> Full Leaves
 Route::get('/full_leave','full_leaves@index')->name('full_leave_list');
 Route::get('/add_full_leave', 'full_leaves@add_full_leave')->name('full_leave_add');
 Route::post('/add_full_leave_action', 'full_leaves@store')->name('full_leave_add_action');
@@ -112,6 +112,20 @@ Route::get('/holiday-count/{from}/{to}/{emId}', 'full_leaves@holidayCount')->nam
 Route::get('full-calender', [FullCalenderController::class, 'index'])->name('show_calander');
 
 Route::post('full-calender/action', [FullCalenderController::class, 'action'])->name('action_calander');
+
+
+//Leave Types-> Leave Report 
+//Leave Types-> Leave Report -> Daily Leave Report
+Route::any('/daily_leave_report_list','daily_leave_report@index')->name('daily_leave_report_list');
+Route::get('/searchLeaves', 'daily_leave_report@search')->name('searchLeaves');
+
+Route::any('/daily_half_leave_report_list','daily_half_leave_report@index')->name('daily_half_leave_report_list');
+Route::any('/daily_short_leave_report_list','daily_short_leave_report@index')->name('daily_short_leave_report_list');
+
+//Leave Types-> Leave Report -> monthly Leave Report
+Route::get('/monthly_leave_report_list','monthly_leave_report@index')->name('monthly_leave_report_list');
+Route::get('/monthly_half_leave_report_list','monthly_half_leave_report@index')->name('monthly_half_leave_report_list');
+Route::get('/monthly_short_leave_report_list','monthly_short_leave_report@index')->name('monthly_short_leave_report_list');
 
 
 // HRM-PAYROLL->Salary
