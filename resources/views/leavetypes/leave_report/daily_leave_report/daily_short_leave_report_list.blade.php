@@ -94,10 +94,11 @@
                     <th>EmployeeID</th>
                     <th>Employee</th>
                     <th>Designation</th>
-                    <th>Leave Type</th>
+                    
                     <th>Star Time</th>
                     <th>End Time</th>
                      <th>leave Date</th>
+                     <th>Reason</th>
                      <th>Status</th>
                      
                   </tr>
@@ -110,10 +111,11 @@
                           <td>{{ $leave->id }}</td>
                           <td>{{ $leave->em_name }}</td>
                           <td>{{ $leave->desig_name }}</td>
-                          <td>{{ $leave->leave_type_name}}</td>
+                         
                           <td>{{ $leave->startTime }}</td>
                           <td>{{ $leave->endTime }}</td>
                           <td>{{ $leave->date }}</td>
+                          <td>{{ $leave->reason}}</td>
                           <td>{{ $leave->status }}</td>
                           
                         </tr>

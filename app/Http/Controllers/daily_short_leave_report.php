@@ -59,20 +59,6 @@ class daily_short_leave_report extends Controller
         
         return view('leavetypes.leave_report.daily_leave_report.daily_short_leave_report_list', compact('leave','employee_info', 'designation_info', 'department_info','employeeId','designationId','departmentId','date'));
     }
-    // public function index2()
-    // {
-    //    $leave =shortleaves::join('employees', 'shortleaves.employeeId', '=', 'employees.employeeId')
-    //         // ->join('leavetypes', 'leaves.leave_type', '=', 'leavetypes.id')
-    //         ->join('designations', 'employees.designation', '=', 'designations.id')
-    //         ->select('shortleaves.*','employees.employeeId as em_id','employees.name as em_name','designations.desig_name')
-    //         ->get();
-        
-    //     // echo '<pre>';
-    //     // print_r($leave);
-    //     // exit;
-    //     return view('leavetypes.leave_report.daily_leave_report.daily_short_leave_report_list', compact('leave'));
-    // }
-
    
 
     public function destroy($id)
