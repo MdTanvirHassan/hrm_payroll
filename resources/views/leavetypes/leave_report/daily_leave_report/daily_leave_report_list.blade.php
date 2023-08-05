@@ -5,12 +5,12 @@
        <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 ">Daily Leave Report List</h1>
+            <h1 class="m-0 ">Leave Report List</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="">Home</a></li>
-              <li class="breadcrumb-item active">Daily Leave Report List</li>
+              <li class="breadcrumb-item active"> Leave Report List</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -27,7 +27,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Daily Leave Report List</h3>
+                <h3 class="card-title"> Leave Report List</h3>
               </div>
               <div class="card-body">
               <form method="post" action="{{ route('daily_leave_report_list') }}" onsubmit="return validateForm()">
@@ -91,7 +91,7 @@
             </div>
               <!-- /.card-header -->
               <div class="card-body print-content">
-              <h6 class="fw-bold my-3">Daily Leave Report List</h6>
+              <h6 class="fw-bold my-3">Leave Report List</h6>
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
                   <tr>
