@@ -245,7 +245,7 @@
               </li>
 
               <li class="nav-item">
-                <a href="pages/layout/top-nav.html" class="nav-link">
+                <a href="{{ route('leave_register_list') }}" class="nav-link">
                   <i class="far fa-circle nav-icon text-white"></i>
                   <p>Leave Register Report</p>
                 </a>

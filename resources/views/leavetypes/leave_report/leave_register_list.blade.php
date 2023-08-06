@@ -5,12 +5,12 @@
        <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Short Leave Report List</h1>
+            <h1 class="m-0 ">Leave Register Report</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="">Home</a></li>
-              <li class="breadcrumb-item active">Short Leave Report List</li>
+              <li class="breadcrumb-item active"> Leave Register Report</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -27,10 +27,10 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Short Leave Report List</h3>
+                <h3 class="card-title"> Leave Register Report</h3>
               </div>
               <div class="card-body">
-              <form method="post" action="{{ route('daily_short_leave_report_list') }}" onsubmit="return validateForm()">
+              <form method="post" action="{{ route('leave_register_list') }}" onsubmit="return validateForm()">
               @csrf
             <div class="d-flex">
 
@@ -68,11 +68,11 @@
             </div>
 
                 <div class="form-group col-3">
-                        <label for="startDateLeave">Search by Date</label>
-                        <input type="date" class="form-control" id="date" name="date" placeholder="Enter date" value="{{ $date }}" >
+                        <label for="date">Search by Year</label>
+                        <input type="month" class="form-control" id="date" name="date" placeholder="Enter year" value="{{ $year }}" >
                        
                     </div>
-                    
+                   
               </div>
 
               <div class="d-flex justify-content-center text-center">    
@@ -86,47 +86,81 @@
 
             </div>
               <!-- /.card-header -->
-              <div class="card-body">
-              <h5 class="card-title my-3">Short Leave Report List</h5>
-                
+              
+      <div class="card-body print-content">
+              <h4 class="fw-bold my-3">Leave Register Report</h4>
+              <?php 
+             
+                    if(!empty($leave)){
+                    foreach($leave as $leave){  ?>
+              <div class="my-3 p-3 shadow rounded">
+                <h6>ID: {{ $leave->em_id }}</h6>
+                <h6>Name: {{ $leave-> em_name }}</h6>
+                <h6>Designation: {{ $leave->desig_name }}</h6>
+                <h6>Posting:</h6>
+                <h6>Joining Date:</h6>
+              </div>
                 <table id="example2" class="table table-bordered table-hover">
                   <thead>
-                  <tr>
-                    <th>EmployeeID</th>
-                    <th>Employee</th>
-                    <th>Designation</th>
-                    
-                    <th>Star Time</th>
-                    <th>End Time</th>
-                     <th>leave Date</th>
-                     <th>Reason</th>
+                  <tr  class='bg-secondary'>
+                    <th>Sl No.</th>
+                    <th>Leave Type</th>
+                    <th>Start Date Leave</th>
+                    <th>EndDateLeave</th>
+                     <th>leave Day</th>
                      <th>Status</th>
                      
                   </tr>
                   </thead>
                   <tbody>
-                    <?php 
-                    if(!empty($leave)){
-                    foreach($leave as $leave){  ?>
+                   
                         <tr>
                           <td>{{ $leave->id }}</td>
-                          <td>{{ $leave->em_name }}</td>
-                          <td>{{ $leave->desig_name }}</td>
-                         
-                          <td>{{ $leave->startTime }}</td>
-                          <td>{{ $leave->endTime }}</td>
-                          <td>{{ $leave->date }}</td>
-                          <td>{{ $leave->reason}}</td>
-                          <td>{{ $leave->status }}</td>
+                          
+                          <td>{{ $leave->leave_type_name}}</td>
+                          <td>{{ $leave->startDateLeave }}</td>
+                          <td>{{ $leave->endDateLeave }}</td>
+                          <td>{{ $leave->leaveDay }}</td>
+                          <td>{{ $leave->leave_reason }}</td>
                           
                         </tr>
-                    <?php 
-                      }
-                    } ?>    
+                      
                   
                   </tfoot>
                 </table>
+
+                
+                <table id="example1" class="table table-bordered table-hover my-3 w-full">
+                  <thead>
+                  <tr  class='bg-secondary'>
+                   
+                    <th>Leave Type</th>
+                    <th>Allowed</th>
+                    <th>Availed</th>
+                     <th>Balance</th>
+                     
+                     
+                  </tr>
+                  </thead>
+                  <tbody>
+                   
+                        <tr>
+                         <td>{{ $leave->leave_type_name}}</td>
+                          <td>{{ $leave->leaveDay }}</td>
+                          <td>{{ $leave->allowedLeave - $leave->leaveDay }}</td>
+                          <td>{{ $leave->allowedLeave - $leave->leaveDay }}</td>
+                         
+                          
+                        </tr>
+                      
+                  
+                  </tfoot>
+                </table>
+                
               </div>
+              <?php 
+                      }
+                    } ?> 
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
@@ -138,4 +172,29 @@
         <!-- /.row -->
       </div>
       <!-- /.container-fluid -->
+
+      
+
+<script>
+  function printContent() {
+    var printContent = document.querySelector('.print-content').innerHTML;
+    var originalContent = document.body.innerHTML;
+
+    // Replace the entire body content with the print content
+    document.body.innerHTML = printContent;
+
+    // Print the modified body content
+    window.print();
+
+    // Restore the original body content
+    document.body.innerHTML = originalContent;
+  }
+
+  // Call the printContent function when a button or link is clicked
+  var printButton = document.querySelector('#printButton');
+  printButton.addEventListener('click', printContent);
+</script>
+
+
+
 @endsection   

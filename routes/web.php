@@ -122,6 +122,9 @@ Route::get('/searchLeaves', 'daily_leave_report@search')->name('searchLeaves');
 Route::any('/daily_half_leave_report_list','daily_half_leave_report@index')->name('daily_half_leave_report_list');
 Route::any('/daily_short_leave_report_list','daily_short_leave_report@index')->name('daily_short_leave_report_list');
 
+//Leave Types-> Leave Report -> Leave Register
+Route::any('/leave_register_list','leave_register@index')->name('leave_register_list');
+
 //Leave Types-> Leave Report -> monthly Leave Report
 Route::get('/monthly_leave_report_list','monthly_leave_report@index')->name('monthly_leave_report_list');
 Route::get('/monthly_half_leave_report_list','monthly_half_leave_report@index')->name('monthly_half_leave_report_list');
