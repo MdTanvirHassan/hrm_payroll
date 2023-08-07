@@ -63,7 +63,7 @@
                           <td>{{ $salary->net_gross }}</td>
                           <td>{{ $salary->gross }}</td>
                           <td>{{ $salary->Basic }}</td>
-                          <td>{{ $salary->routing_number }}</td>
+                          <td>{{ $salary->HouseRent }}</td>
                           <td>{{ $salary->Medical }}</td>
                           <td>{{ $salary->Transport }}</td>
                           <td>{{ $salary->Others }}</td>

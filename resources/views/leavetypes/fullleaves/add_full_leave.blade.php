@@ -34,8 +34,8 @@
             <div class="d-flex">
                   <div class="form-group col-4">
                       <label for="employeeId" class="form-label">Employee </label>
-                      <select class="form-select form-control" id="employeeId" name="employeeId" required>
-                          <option >Select Employee</option>
+                      <select class="form-select form-control" id="employeeId" name="employeeId" >
+                          <option value=''>Select Employee</option>
                           @foreach ($leave_info as $employee)
                               <option value="{{ $employee->id }}">{{ $employee->name }}</option>
                           @endforeach
@@ -46,11 +46,11 @@
 
                   <div class="form-group col-4">
                     <label for="leave_type">Leave types</label>
-                    <select class="form-select form-control" id="leave_type" name='leave_type' required>
-                            <option >Select leave types</option>
+                    <select class="form-select form-control" id="leave_type" name='leave_type' >
+                            <option value=''>Select leave types</option>
                             @foreach ($leave_type as $type)
-                          <option value="{{ $type->id }}">{{ $type->name }}</option>
-                      @endforeach
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
                           </select>
                           <p id="leave_typeError" class="text-danger"></p>
                   </div>

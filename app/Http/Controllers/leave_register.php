@@ -26,7 +26,7 @@ class leave_register extends Controller
        $employee_info = employees::all();
        $designation_info = designations::all();
        $department_info = departments::all();
-       $leave =leaves::join('employees', 'leaves.employeeId', '=', 'employees.employeeId')
+       $fullLeave =leaves::join('employees', 'leaves.employeeId', '=', 'employees.employeeId')
             ->join('leavetypes', 'leaves.leave_type', '=', 'leavetypes.id')
             ->join('designations', 'employees.designation', '=', 'designations.id')
             ->join('departments', 'employees.department', '=', 'departments.id')
@@ -35,28 +35,28 @@ class leave_register extends Controller
 
          // Apply filters based on search parameters
          if (!empty($employeeId)) {
-            $leave->where('leaves.employeeId', $employeeId);
+            $fullLeave->where('leaves.employeeId', $employeeId);
         }
 
-        if (!empty($designation)) {
-            $leave->where('employees.designation', $designationId);
+        if (!empty($designationId)) {
+            $fullLeave->where('employees.designation', $designationId);
         }
 
-        if (!empty($department)) {
-            $leave->where('employees.department', $departmentId);
+        if (!empty($departmentId)) {
+            $fullLeave->where('employees.department', $departmentId);
         }
 
         if (!empty($year) ) {
             // Assuming 'startDateLeave' and 'endDateLeave' are the columns for leave dates in the 'leaves' table
-            $leave->whereDate('leaves.year', '=', $year);
+            $fullLeave->whereDate('leaves.year', '=', $year);
               
         }
 
        
-         $leave=$leave->get();    
+         $fullLeave=$fullLeave->get();    
         
         
-        return view('leavetypes.leave_report.leave_register_list', compact('leave','employee_info', 'designation_info', 'department_info','employeeId','designationId','departmentId','year', ));
+        return view('leavetypes.leave_report.leave_register_list', compact('fullLeave','employee_info', 'designation_info', 'department_info','employeeId','designationId','departmentId','year', ));
     }
 
    

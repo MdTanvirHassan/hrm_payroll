@@ -25,8 +25,7 @@ class salary extends Controller
 
     public function add_salary()
     {
-        $employee_info = DB::table('employees')
-                    ->join('designations', 'employees.designation', '=', 'designations.id')
+        $employee_info = employees::join('designations', 'employees.designation', '=', 'designations.id')
                      ->select('employees.*','designations.desig_name')
                     ->get();
         $bank_info = banks::all();                        

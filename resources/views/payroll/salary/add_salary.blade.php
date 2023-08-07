@@ -35,8 +35,8 @@
 
               <div class="form-group col-4">
                 <label for="employeeId" class="form-label">Employee</label>
-                <select class="form-select form-control" id="employeeId" name="employeeId" required onchange="updateName()">
-                    <option>Select Employee</option>
+                <select class="form-select form-control" id="employeeId" name="employeeId"  onchange="updateName()">
+                    <option value=''>Select Employee</option>
                     @foreach ($employee_info as $employee)
                         <option value="{{ $employee->id }}">{{ $employee->name }}({{$employee->employeeId}})</option>
                     @endforeach
@@ -47,13 +47,13 @@
               <div class="form-group col-4">
                   <label for="name">Name</label>
                   <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" >
-                  <p id="nameError" class="text-danger"></p>
+                  <!-- <p id="nameError" class="text-danger"></p> -->
               </div>
 
               <div class="form-group col-4">
                   <label for="desig_name">Designation</label>
                   <input type="text" class="form-control" id="desig_name" name="desig_name" placeholder="Enter designation" >
-                  <p id="desig_nameError" class="text-danger"></p>
+                  <!-- <p id="desig_nameError" class="text-danger"></p> -->
               </div>
 
 
@@ -86,25 +86,25 @@
             </div>
 
             <div class="d-flex">
-              
-                    <div class="form-group col-4">
-                        <label for="gross">Gross Salary</label>
-                        <input type="number" class="form-control" id="gross" name="gross" placeholder="Enter gross salary" >
-                        <p id="grossError" class="text-danger"></p>
-                    </div>
-                    <div class="form-group col-4">
-                        <label for="others">Others Allowance</label>
-                        <input type="number" class="form-control" id="others" name="others" placeholder="Enter Others Allowance" >
-                        <p id="othersError" class="text-danger"></p>
-                    </div>
+    <div class="form-group col-4">
+        <label for="gross">Gross Salary</label>
+        <input type="number" class="form-control" id="gross" name="gross" placeholder="Enter gross salary" oninput="updateNetGross()">
+        <p id="grossError" class="text-danger"></p>
+    </div>
+    <div class="form-group col-4">
+        <label for="others">Others Allowance</label>
+        <input type="number" class="form-control" id="others" name="others" placeholder="Enter Others Allowance" oninput="updateNetGross()">
+        <!-- <p id="othersError" class="text-danger"></p> -->
+    </div>
+    <div class="form-group col-4">
+        <label for="net_gross">Net Gross Benefit</label>
+        <input type="number" class="form-control" id="net_gross" name="net_gross" placeholder="Enter net gross benefit" readonly>
+    </div>
+</div>
 
-                      <div class="form-group col-4">
-                        <label for="net_gross">Net Gross Benefit</label>
-                        <input type="number" class="form-control" id="net_gross" name="net_gross" placeholder="Enter net gross benifit" >
-                        
-                      </div>
 
-            </div>
+
+
 
             <h5 class="text-warning">Deduction</h5>
 
@@ -113,12 +113,12 @@
                     <div class="form-group col-4">
                         <label for="stamp">Stamp</label>
                         <input type="number" class="form-control" id="stamp" name="Stamp" placeholder="Enter stamp" >
-                        <p id="stampError" class="text-danger"></p>
+                        <!-- <p id="stampError" class="text-danger"></p> -->
                     </div>
                     <div class="form-group col-4">
                         <label for="tax">Tax</label>
                         <input type="number" class="form-control" id="tax" name="Tax" placeholder="Enter Tax" >
-                        <p id="othersError" class="text-danger"></p>
+                        <!-- <p id="othersError" class="text-danger"></p> -->
                     </div>
 
                       <div class="form-group col-4">
@@ -135,24 +135,26 @@
               
                     <div class="form-group col-4">
                         <label for="distribution_type">Distribution Type</label>
-                        <select class="form-select form-control" id="distribution_type" name='distribution_type' required>
-                            <option >Select distribution type </option>
+                        <select class="form-select form-control" id="distribution_type" name='distribution_type' >
+                            <option value=''>Select distribution type </option>
                            
                             <option value="fixed">Fixed</option>
                             <option value="percent">Percentage</option>
                           
                           </select>
+                          <p id="distribution_typeError" class="text-danger"></p>
                           
                     </div>
                     <div class="form-group col-4">
                         <label for="bank_portion">Bank Amount</label>
-                        <input type="number" class="form-control" id="bank_portion" name="bank_portion" placeholder="Enter Bank Amount" >
-                        <!-- <p id="othersError" class="text-danger"></p> -->
+                        <input type="number" class="form-control" id="bank_portion" name="bank_portion" placeholder="Enter Bank Amount" oninput='updatePayment()'>
+                        <p id="bank_portionError" class="text-danger"></p>
                     </div>
 
                       <div class="form-group col-4">
                         <label for="cash_portion">Cash</label>
-                        <input type="number" class="form-control" id="cash_portion" name="cash_portion" placeholder="Enter Cash amount" >
+                        <input type="number" class="form-control" id="cash_portion" name="cash_portion" placeholder="Enter Cash amount"  oninput='updateCashPayment()'>
+                        <p id="cash_portionError" class="text-danger"></p>
                         
                       </div>
 
@@ -162,7 +164,7 @@
               
             <div class="form-group col-4">
                 <label for="bank_id">Bank</label>
-                <select class="form-select form-control" id="bank_id" name='bank_id' required>
+                <select class="form-select form-control" id="bank_id" name='bank_id' >
                     <option>Select Bank</option>
                     @foreach ($bank_info as $bank)
                         <option value="{{ $bank->id }}">{{ $bank->name }}</option>
@@ -177,12 +179,13 @@
 
                       <div class="form-group col-4">
                         <label for="salary_held_up">Salary Held Up</label>
-                        <select class="form-select form-control" id="salary_held_up" name='salary_held_up' required>
+                        <select class="form-select form-control" id="salary_held_up" name='salary_held_up' >
                             <option value="">Select salary held up</option>
                             
                                 <option value="no">No</option>
                                 <option value="yes">Yes</option>
                         </select>
+                        <p id="salary_held_upError" class="text-danger"></p>
                         
                       </div>
 
@@ -209,11 +212,12 @@
 function validateForm() {
   var fields = [
     { id: "employeeId", name: "Employee ID" },
-    { id: "name", name: "Employee Name" },
-    { id: "designation", name: "designation" },
+    
     { id: "gross", name: "Gross Salary" },
-    { id: "others", name: "Others Allowance" },
-    // { id: "status", name: "Status" }
+    // { id: "distribution_type", name: "distribution type" },
+    { id: "bank_portion", name: "bank portion" },
+    { id: "cash_portion", name: "cash portion" },
+    // { id: "salary_held_up", name: "salary held up" },
   ];
 
   var isValid = true;
@@ -259,10 +263,49 @@ function validateForm() {
    
 </script>
 
+<script>
+    function updateNetGross() {
+          var grossInput = parseFloat(document.getElementById("gross").value);
+          var othersInput = parseFloat(document.getElementById("others").value);
+          var netGrossInput;
+
+          if (!isNaN(othersInput)) {
+              netGrossInput = grossInput + othersInput;
+          } else {
+              netGrossInput = grossInput;
+          }
+
+          document.getElementById("net_gross").value = netGrossInput;
+      }
 
 
+    function updatePayment() {
+        var netGrossInput  = parseFloat(document.getElementById("net_gross").value);
+        var bankInput = parseFloat(document.getElementById("bank_portion").value);
+        
+        var amount = netGrossInput - bankInput;
+        
 
+        document.getElementById("cash_portion").value = amount;
 
+       
+        
+    }
+
+    function updateCashPayment() {
+        var netGrossInput  = parseFloat(document.getElementById("net_gross").value);
+        
+        var cashInput = parseFloat(document.getElementById("cash_portion").value);
+        
+        var bankAmount = netGrossInput - cashInput;
+
+        
+
+        document.getElementById("bank_portion").value = bankAmount;
+        
+    }
+    
+</script>
 
 
 @endsection

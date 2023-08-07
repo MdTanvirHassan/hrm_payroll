@@ -35,8 +35,8 @@
 
               <div class="form-group col-4">
                 <label for="emId" class="form-label">Employee</label>
-                <select class="form-select form-control" id="emId" name="emId" required onchange="updateName()">
-                    <option>Select Employee</option>
+                <select class="form-select form-control" id="emId" name="emId"  onchange="updateName()">
+                    <option value=''>Select Employee</option>
                     @foreach ($employee_info as $employee)
                         <option value="{{ $employee->id }}">{{ $employee->name }}({{$employee->employeeId}})</option>
                     @endforeach
@@ -76,6 +76,7 @@
                       <div class="form-group col-4">
                         <label for="amount">Amount</label>
                         <input type="number" class="form-control" id="amount" name="amount" placeholder="Enter amount" >
+                        <p id="amountError" class="text-danger"></p>
                         
                       </div>
 

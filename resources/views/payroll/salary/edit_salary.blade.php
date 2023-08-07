@@ -92,12 +92,12 @@
               
                     <div class="form-group col-4">
                         <label for="gross">Gross Salary</label>
-                        <input type="number" class="form-control" id="gross" name="gross" placeholder="Enter gross salary" value="{{ $salary_info->gross }}">
+                        <input type="number" class="form-control" id="gross" name="gross" placeholder="Enter gross salary" value="{{ $salary_info->gross }}"  oninput="updateNetGross()">
                         <p id="grossError" class="text-danger"></p>
                     </div>
                     <div class="form-group col-4">
                         <label for="others">Others Allowance</label>
-                        <input type="number" class="form-control" id="others" name="others" placeholder="Enter Others Allowance" value="{{ $salary_info->Others }}">
+                        <input type="number" class="form-control" id="others" name="others" placeholder="Enter Others Allowance" value="{{ $salary_info->Others }}"  oninput="updateNetGross()">
                         <p id="othersError" class="text-danger"></p>
                     </div>
 
@@ -152,13 +152,13 @@
                     
                     <div class="form-group col-4">
                         <label for="bank_portion">Bank Amount</label>
-                        <input type="number" class="form-control" id="bank_portion" name="bank_portion" placeholder="Enter Bank Amount" value="{{ $employee_bank_info->bank_portion	 }}">
+                        <input type="number" class="form-control" id="bank_portion" name="bank_portion" placeholder="Enter Bank Amount" value="{{ $employee_bank_info->bank_portion	 }}"  oninput='updatePayment()'>
                         <!-- <p id="othersError" class="text-danger"></p> -->
                     </div>
 
                       <div class="form-group col-4">
                         <label for="cash_portion">Cash</label>
-                        <input type="number" class="form-control" id="cash_portion" name="cash_portion" placeholder="Enter Cash amount" value="{{ $employee_bank_info->cash_portion }}">
+                        <input type="number" class="form-control" id="cash_portion" name="cash_portion" placeholder="Enter Cash amount" value="{{ $employee_bank_info->cash_portion }}"   oninput='updateCashPayment()'>
                         
                       </div>
 
@@ -267,4 +267,49 @@ function validateForm() {
 
    
 </script>
+
+<script>
+    function updateNetGross() {
+          var grossInput = parseFloat(document.getElementById("gross").value);
+          var othersInput = parseFloat(document.getElementById("others").value);
+          var netGrossInput;
+
+          if (!isNaN(othersInput)) {
+              netGrossInput = grossInput + othersInput;
+          } else {
+              netGrossInput = grossInput;
+          }
+
+          document.getElementById("net_gross").value = netGrossInput;
+      }
+
+
+    function updatePayment() {
+        var netGrossInput  = parseFloat(document.getElementById("net_gross").value);
+        var bankInput = parseFloat(document.getElementById("bank_portion").value);
+        
+        var amount = netGrossInput - bankInput;
+        
+
+        document.getElementById("cash_portion").value = amount;
+
+       
+        
+    }
+
+    function updateCashPayment() {
+        var netGrossInput  = parseFloat(document.getElementById("net_gross").value);
+        
+        var cashInput = parseFloat(document.getElementById("cash_portion").value);
+        
+        var bankAmount = netGrossInput - cashInput;
+
+        
+
+        document.getElementById("bank_portion").value = bankAmount;
+        
+    }
+    
+</script>
+
 @endsection
