@@ -56,7 +56,7 @@
                 
             </div>
 
-            <div class="form-group col-3">
+            <div class="form-group col-2">
                 <label for="department" class="form-label">Department</label>
                 <select class="form-select form-control" id="department" name="department">
                     <option value="">Select Department</option>
@@ -67,9 +67,14 @@
                 <p id="employeeIdError" class="text-danger"></p>
             </div>
 
-                <div class="form-group col-3">
-                        <label for="startDateLeave">Search by Date</label>
-                        <input type="date" class="form-control" id="date" name="date" placeholder="Enter date" value="{{ $date }}" >
+                <div class="form-group col-2">
+                        <label for="startDateLeave">From Date</label>
+                        <input type="date" class="form-control" id="date" name="startDate" placeholder="Enter date" value="{{ $startDate }}" >
+                       
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="startDateLeave">To Date</label>
+                        <input type="date" class="form-control" id="date" name="endDate" placeholder="Enter date" value="{{ $endDate }}" >
                        
                     </div>
                     
@@ -95,9 +100,9 @@
                     <th>Employee</th>
                     <th>Designation</th>
                     
-                    <th>Start Date Leave</th>
-                    <th>EndDateLeave</th>
-                     <th>leave Date</th>
+                    <th>From Time</th>
+                    <th>To Time</th>
+                     <th>Leave Date</th>
                      <th>Reason</th>
                      <th>Status</th>
                      
@@ -112,8 +117,9 @@
                           <td>{{ $leave->em_name }}</td>
                           <td>{{ $leave->desig_name }}</td>
                           
-                          <td>{{ $leave->startTime }}</td>
-                          <td>{{ $leave->endTime }}</td>
+                          <td>{{ date("h:i A", strtotime($leave->startTime)) }}</td>
+                          <td>{{ date("h:i A", strtotime($leave->endTime)) }}</td>
+
                           <td>{{ $leave->date }}</td>
                           <td>{{ $leave->reason}}</td>
                           <td>{{ $leave->Status }}</td>

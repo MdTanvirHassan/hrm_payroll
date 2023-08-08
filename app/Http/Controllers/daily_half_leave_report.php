@@ -20,7 +20,8 @@ class daily_half_leave_report extends Controller
         
         $designationId = $request->input('designation');
         $departmentId = $request->input('department');
-        $date = $request->input('date');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
         
 
 
@@ -39,17 +40,18 @@ class daily_half_leave_report extends Controller
             $leave->where('halfleaves.employeeId', $employeeId);
         }
 
-        if (!empty($designation)) {
+        if (!empty($designationId)) {
             $leave->where('employees.designation', $designationId);
         }
 
-        if (!empty($department)) {
+        if (!empty($departmentId)) {
             $leave->where('employees.department', $departmentId);
         }
 
-        if (!empty($date) ) {
-            // Assuming 'startDateLeave' and 'endDateLeave' are the columns for leave dates in the 'leaves' table
-            $leave->whereDate('halfleaves.date', '>=', $date);
+        if (!empty($startDate) && !empty($endDate)) {
+           
+            $leave->whereDate('halfleaves.date', '>=', $startDate)
+                ->whereDate('halfleaves.date', '<=', $endDate);
                 
         }
 
@@ -57,7 +59,7 @@ class daily_half_leave_report extends Controller
          $leave=$leave->get();    
         
         
-        return view('leavetypes.leave_report.daily_leave_report.daily_half_leave_report_list', compact('leave','employee_info', 'designation_info', 'department_info','employeeId','designationId','departmentId','date'));
+        return view('leavetypes.leave_report.daily_leave_report.daily_half_leave_report_list', compact('leave','employee_info', 'designation_info', 'department_info','employeeId','designationId','departmentId','endDate','startDate'));
     }
     public function index2()
     {

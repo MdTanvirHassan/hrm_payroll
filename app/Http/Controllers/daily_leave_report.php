@@ -47,7 +47,7 @@ class daily_leave_report extends Controller
         }
 
         if (!empty($start_date) && !empty($end_date)) {
-            // Assuming 'startDateLeave' and 'endDateLeave' are the columns for leave dates in the 'leaves' table
+            
             $leave->whereDate('leaves.startDateLeave', '>=', $start_date)
                 ->whereDate('leaves.endDateLeave', '<=', $end_date);
         }
