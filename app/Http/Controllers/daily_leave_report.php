@@ -38,11 +38,11 @@ class daily_leave_report extends Controller
             $leave->where('leaves.employeeId', $employeeId);
         }
 
-        if (!empty($designation)) {
+        if (!empty($designationId)) {
             $leave->where('employees.designation', $designationId);
         }
 
-        if (!empty($department)) {
+        if (!empty($departmentId)) {
             $leave->where('employees.department', $departmentId);
         }
 

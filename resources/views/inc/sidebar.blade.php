@@ -184,13 +184,13 @@
               </li>
 
              
-              <li class="nav-item mx-3">
+              <li class="nav-item mx-1">
             <a href="#" class="nav-link">
               <i class="nav-icon text-info fas fa-copy"></i>
-              <p>
+              <p class='mx-3'>
                 Leave's Report
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-success right">6</span>
+                <!-- <span class="badge badge-success right">6</span> -->
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -205,25 +205,25 @@
               <li class="nav-item">
                 <a href="{{ route('daily_leave_report_list') }}" class="nav-link">
                   <i class="far fa-circle nav-icon text-info"></i>
-                  <p>Daily Leave</p>
+                  <p>Full Leave Report</p>
                 </a>
               </li>
 
                <li class="nav-item">
                 <a href="{{ route('daily_half_leave_report_list') }}" class="nav-link">
                   <i class="far fa-circle nav-icon text-success"></i>
-                  <p>Daily Half Leave</p>
+                  <p>Half Leave Report</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{{ route('daily_short_leave_report_list') }}" class="nav-link">
                   <i class="far fa-circle nav-icon text-secondary"></i>
-                  <p>Daily Short Leave</p>
+                  <p>Short Leave Report</p>
                 </a>
               </li>
 
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a href="{{ route('monthly_leave_report_list') }}"  class="nav-link">
                   <i class="far fa-circle nav-icon text-info"></i>
                   <p>Monthly Leave</p>
@@ -242,7 +242,7 @@
                   <i class="far fa-circle nav-icon text-secondary"></i>
                   <p>Monthly Short Leave</p>
                 </a>
-              </li>
+              </li> -->
 
               <li class="nav-item">
                 <a href="{{ route('leave_register_list') }}" class="nav-link">
@@ -294,6 +294,13 @@
                 <a href="{{route('absent_payments_list')}}" class="nav-link">
                   <i class="far fa-circle nav-icon text-success"></i>
                   <p>Absent Payments</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{route('approval_salary_report')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon text-success"></i>
+                  <p>Approval Salary Report</p>
                 </a>
               </li>
 

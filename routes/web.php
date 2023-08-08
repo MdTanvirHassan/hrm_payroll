@@ -159,4 +159,7 @@ Route::get('/view_absent_payments/{id}', 'absent_payments@view_absent_payments')
 Route::post('/update_absent_payments', 'absent_payments@update')->name('update_absent_payments');
 Route::get('/absent_payments_delete/{id}', 'absent_payments@destroy')->name('absent_payments_delete');
 
+// HRM-PAYROLL->absent_payments
+Route::any('/approval_salary_report','approval_salary_report@index')->name('approval_salary_report');
+
 
