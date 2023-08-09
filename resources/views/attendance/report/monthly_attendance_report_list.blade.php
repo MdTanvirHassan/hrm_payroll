@@ -4,12 +4,12 @@
        <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 ">Approval Salary Report</h1>
+            <h1 class="m-0 ">Monthly Attendance Report</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="">Home</a></li>
-              <li class="breadcrumb-item active"> Approval Salary Report</li>
+              <li class="breadcrumb-item active"> Monthly Attendance Report</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -26,10 +26,10 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"> Approval Salary Report</h3>
+                <h3 class="card-title"> Monthly Attendance Report</h3>
               </div>
               <div class="card-body">
-              <form method="post" action="{{ route('approval_salary_report') }}" onsubmit="return validateForm()">
+              <form method="post" action="{{ route('monthly_attendance_report') }}" onsubmit="return validateForm()">
               @csrf
             <div class="d-flex">
 
@@ -90,75 +90,82 @@
             </div>
               <!-- /.card-header -->
               <div class="card-body print-content">
-              <h6 class="fw-bold my-3">Approval Salary Report</h6>
+              <h6 class="fw-bold my-3">Monthly Attendance Report</h6>
               
-                <table id="example2" class="table table-bordered table-hover" style='overflow-x: scroll !important;'>
+                <table id="example2" class="table table-bordered table-hover table-responsive" style='overflow-x: scroll !important;'>
                 
                      
-                  <thead style='' class=' bg-light'>
+                <thead style='' class=' bg-light'>
                       <tr class='text-center'>
                           <th rowspan="2">SL</th>
-                          <th rowspan="2">Name of the Employee</th>
+                          <th rowspan="2">Employee ID</th>
+                          <th rowspan="2">Employee Name</th>
                           <th rowspan="2">Department</th>
-                          <th rowspan="2" class='text-center'>Designation</th>
-                          <th rowspan="2">j. Date</th>
-                          <th rowspan="2">T.Days</th>
-                          <th rowspan="2">P.Days</th>
-                          <th rowspan="2">G.Salary</th>
-                          <th rowspan="2">Cash</th>
-                          <th rowspan="2">Bank</th>
-                          <th rowspan="2">Absent Amount</th>
-                          <th rowspan="2">Total Payable</th>
-                          <th colspan="10">Deduction</th>
-                          <th rowspan="2">Arrear</th>
-                          <th  rowspan="2">Net Payable</th>
+                          <th rowspan="2">Designation</th>
+                          
+                          <th colspan="5"  class='text-center'>Leave Status</th>
+                          <th rowspan="2">CL Ded.</th>
+                          <th  rowspan="2">ML Ded.</th>
+                          <th rowspan="2">Total Leave</th>
+                          <th rowspan="2">A.D.L</th>
+                          <th rowspan="2">Total Absent</th>
+                          <th rowspan="2">Absent Reduce</th>
+                          <th rowspan="2">Working Day</th>
+                          <th rowspan="2">Payable Days</th>
+                          <th colspan="5"  class='text-center'>Leave Due</th>
+                          <th rowspan="2">Remarks</th>
                           
                       </tr>
                       <tr >
-                          <th>Stamp</th>
-                          <th>TDS</th>
-                          <th>Gen. Loan</th>
-                          <th>Sal. Adv. </th>
-                          <th>Car Loan</th>
-                          <th>meal</th>
-                          <th>Mobile</th>
-                          <th>Security</th>
-                          <th>Other Deduction</th>
-                          <th>Total Deduction</th>
+                          <th>SPL</th>
+                          <th>CL</th>
+                          <th>MTL</th>
+                          <th>ML</th>
+                          <th>CPL</th>
+
+                          <th>SPL</th>
+                          <th>CL</th>
+                          <th>MTL</th>
+                          <th>ML</th>
+                          <th>CPL</th>
                       </tr>
+                      
+                      
                     </thead>
                       <tbody>
                       
-                    @if(!empty($generate_info))
-                    @foreach($generate_info as $generate)
+                    @if(!empty($attendance_info))
+                    @foreach($attendance_info as $attendance)
                       <tr>
-                          <td>{{ $generate->id }}</td>
-                          <td>{{ $generate->em_name }}</td>
-                          <td>{{ $generate->dept_short_name }}</td>
-                          <td>{{ $generate->desig_name }}</td>
-                          <td>{{ $generate->joinDate }}</td>
+                          <td>{{ $attendance->id }}</td>
+                          <td>{{ $attendance->em_id }}</td>
+                          <td>{{ $attendance->em_name }}</td>
+                          <td>{{ $attendance->dept_short_name }}</td>
+                          <td>{{ $attendance->desig_name }}</td>
+                          <td>{{ $attendance->i }}</td>
 
-                          <td>{{ $generate->working_days }}</td>
-                          <td>{{ $generate->payable_days }}</td>
-                          <td>{{ $generate->gross }}</td>
-                          <td>{{ $generate->cash_amount }}</td>
-                          <td>{{ $generate->bank_amount }}</td>
-                          <td>{{ $generate->absent_amount }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->cl_deduction }}</td>
+                          <td>{{ $attendance->ml_deduction }}</td>
                           
-                          <td>{{ $generate->net_payable }}</td>
-                          <td>{{ $generate->Stamp }}</td>
-                          <td>{{ $generate->TDS }}</td>
-                          <td>{{ $generate->general_loan }}</td>
-                          <td>{{ $generate->salary_advance }}</td>
-                          <td>{{ $generate->car_loan }}</td>
-                          <td>{{ $generate->meal }}</td>
-                          <td>{{ $generate->mobile_deduction }}</td>
-                          <td>{{ $generate->security_amount }}</td>
-                          <td>{{ $generate->other_deduction }}</td>
-                          <td>{{ $generate->total_deduction }}</td>
-                          <td>{{ $generate->arrear }}</td>
+                          <td>{{ $attendance->total_leave }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->absent_days }}</td>
+                          <td>{{ $attendance->absent_reduce }}</td>
+                          <td>{{ $attendance->working_days }}</td>
+                          <td>{{ $attendance->payable_days }}</td>
+                         
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
+                          <td>{{ $attendance->i }}</td>
 
-                          <td>{{ $generate->net_payable }}</td>
+                       
                       </tr>
                      @endforeach
                      @endif   

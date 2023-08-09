@@ -163,3 +163,7 @@ Route::get('/absent_payments_delete/{id}', 'absent_payments@destroy')->name('abs
 Route::any('/approval_salary_report','approval_salary_report@index')->name('approval_salary_report');
 
 
+//Attendance
+//Attendance->report->monthly_attendance_report_list
+Route::any('/monthly_attendance_report','monthly_attendance_report@index')->name('monthly_attendance_report');
+Route::any('/monthly_attendance','monthly_attendance@index')->name('monthly_attendance');
