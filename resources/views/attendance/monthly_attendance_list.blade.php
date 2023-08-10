@@ -68,12 +68,12 @@
 
             <div class="form-group col-2">
                     <label for="startDateLeave">Start Date</label>
-                    <input type="date" class="form-control" id="startDateLeave" name="startDateLeave" placeholder="Enter startDateLeave" value="{{ $start_date }}" >
+                    <input type="date" class="form-control" id="startDateLeave" name="startDateLeave" placeholder="Enter startDateLeave" value="{{ $month }}" >
                    
                 </div>
                 <div class="form-group col-2">
                     <label for="endDateLeave">end Date</label>
-                    <input type="date" class="form-control" id="endDateLeave" name="endDateLeave" placeholder="Enter endDateLeave" value="{{ $end_date }}">
+                    <input type="date" class="form-control" id="endDateLeave" name="endDateLeave" placeholder="Enter endDateLeave" value="{{ $year }}">
                     <!-- <p id="grossError" class="text-danger"></p> -->
                 </div>
           </div>
@@ -92,53 +92,69 @@
           <div class="card-body print-content">
           <h6 class="fw-bold my-3">Monthly Attendance List</h6>
           
-            <table id="example2" class="table table-bordered table-hover table-responsive" style='overflow-x: scroll !important;'>
-            
-                 
-            <thead style='' class=' bg-light'>
-                  <tr class='text-center'>
-                      <!-- <th rowspan="2">SL</th>
-                      <th rowspan="2">Employee ID</th> -->
-                      <th rowspan="2"> Name</th>
-                      
-                      <th rowspan="2">Designation</th>
-                      <th rowspan="2">Time</th>
-                      
-                      <th rowspan="1"  >1</th>
-                      <th rowspan="1">2</th>
-                      
-                      
-                  </tr>
-                  <tr >
-                      <th>Saturday</th>
-                      <th>Sunday</th>
-                      
-                  </tr>
-                  
-                  
-                </thead>
-                  <tbody>
-                  
-               
-                  <tr>
-                      <td rowspan='3'>Tanvir(001)</td>
-                      <td rowspan='3'>SE</td>
-                      <td rowspan='3'>g</td>
-                   
-                  </tr>
-                  <tr>
-                      <td>status</td>
-                      <td>IN</td>
-                      <td >OUT</td>
-                   
-                  </tr>
-                
-              
-              </tfoot>
-                </tbody>
-                  
-                
-            </table>
+          
+
+        <table class="table table-bordered table-hover table-responsive">
+                        <thead>
+                           <tr class="text-center">
+                           <th rowspan="2">Name</th>
+                            <th rowspan="2">Designation</th>
+                            <th rowspan="2">Time</th>
+                            @for ($day = 1; $day <= $days_in_month; $day++)
+                                <th rowspan="1" class='{{ $day == "4" ? "bg-secondary ":""}}'>{{ $day }}</th>
+                            @endfor
+                            <th rowspan="1">Total</th>
+                           </tr>
+                           <tr>
+                           @for ($day = 1; $day <= $days_in_month; $day++)
+                              <th  class='{{ $day == "4" ? "bg-secondary ":""}}'>{{ \Carbon\Carbon::createFromDate($year, $month, $day)->shortDayName }}</th>
+                          @endfor
+                          <th>Total</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @foreach ($attendance_info as $attendance)
+                              <tr>
+                                 <td rowspan="3">{{ $attendance->em_name }} ({{ $attendance->em_id }})</td>
+                                 <td rowspan="3">{{ $attendance->desig_name }}</td>
+                                 <td>Status</td>
+                                 <td class="{{ $attendance->status === 'Present' ? 'bg-green' : ($attendance->status === 'Late' ? 'bg-warning' : ($attendance->status === 'Absent' ? 'bg-danger' : '')) }}">{{ $attendance->status }}</td>
+
+                                    {{ $attendance->status }}
+                                 </td>
+                                 <!-- Add table cells for each day's attendance -->
+                                 @for ($day = 1; $day <= $days_in_month; $day++)
+                                    <td>
+                                       {{ $attendance->status }}
+                                    </td>
+                                 @endfor
+                              </tr>
+                              <tr>
+                                 <td>IN</td>
+                                 <td class="{{ strtotime($attendance->timeIn) <= strtotime('10:30:30') ? 'bg-green' : 'bg-danger' }}">{{ date('h:i A', strtotime($attendance->timeIn)) }}</td>
+
+                                 <!-- Add table cells for each day's attendance -->
+                                 @for ($day = 1; $day <= $days_in_month; $day++)
+                                    <td>
+                                       <!-- You can populate the attendance data here -->
+                                    </td>
+                                 @endfor
+                              </tr>
+                              <tr>
+                                 <td>OUT</td>
+                                 <td class="{{ strtotime($attendance->timeOut) >= strtotime('06:30:00') && strtotime($attendance->timeOut) <= strtotime('07:45:00') ? 'bg-green' : ( strtotime($attendance->timeOut) >= strtotime('7:46:00') ? 'bg-info' : 'bg-warning' ) }}">
+                                    {{ date('h:i A', strtotime($attendance->timeOut)) }}
+                                 </td>
+                                 <!-- Add table cells for each day's attendance -->
+                                 @for ($day = 1; $day <= $days_in_month; $day++)
+                                    <td>
+                                       <!-- You can populate the attendance data here -->
+                                    </td>
+                                 @endfor
+                              </tr>
+                           @endforeach
+                        </tbody>
+                     </table>
           </div>
           <!-- /.card-body -->
         </div>

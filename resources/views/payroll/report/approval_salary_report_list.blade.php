@@ -92,7 +92,7 @@
               <div class="card-body print-content">
               <h6 class="fw-bold my-3">Approval Salary Report</h6>
               
-                <table id="example2" class="table table-bordered table-hover" style='overflow-x: scroll !important;'>
+                <table id="example2" class="table table-bordered table-hover table-responsive" style='overflow-x: scroll !important;'>
                 
                      
                   <thead style='' class=' bg-light'>
