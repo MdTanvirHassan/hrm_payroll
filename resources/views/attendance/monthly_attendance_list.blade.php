@@ -55,7 +55,7 @@
             
         </div>
 
-        <div class="form-group col-2">
+        <div class="form-group col-3">
             <label for="department" class="form-label">Department</label>
             <select class="form-select form-control" id="department" name="department">
                 <option value="">Select Department</option>
@@ -66,16 +66,16 @@
             <p id="employeeIdError" class="text-danger"></p>
         </div>
 
-            <div class="form-group col-2">
+            <div class="form-group col-3">
                     <label for="startDateLeave">Start Date</label>
-                    <input type="date" class="form-control" id="startDateLeave" name="startDateLeave" placeholder="Enter startDateLeave" value="{{ $month }}" >
+                    <input type="month" class="form-control" id="startDateLeave" name="startDateLeave" placeholder="Enter startDateLeave" value="{{ $month }}" >
                    
                 </div>
-                <div class="form-group col-2">
+                <!-- <div class="form-group col-2">
                     <label for="endDateLeave">end Date</label>
                     <input type="date" class="form-control" id="endDateLeave" name="endDateLeave" placeholder="Enter endDateLeave" value="{{ $year }}">
-                    <!-- <p id="grossError" class="text-danger"></p> -->
-                </div>
+                    
+                </div> -->
           </div>
 
           <div class="d-flex justify-content-center text-center">    
@@ -92,69 +92,204 @@
           <div class="card-body print-content">
           <h6 class="fw-bold my-3">Monthly Attendance List</h6>
           
-          
+          <!-- //todo attendance -->
 
-        <table class="table table-bordered table-hover table-responsive">
-                        <thead>
-                           <tr class="text-center">
-                           <th rowspan="2">Name</th>
-                            <th rowspan="2">Designation</th>
-                            <th rowspan="2">Time</th>
-                            @for ($day = 1; $day <= $days_in_month; $day++)
-                                <th rowspan="1" class='{{ $day == "4" ? "bg-secondary ":""}}'>{{ $day }}</th>
-                            @endfor
-                            <th rowspan="1">Total</th>
-                           </tr>
-                           <tr>
-                           @for ($day = 1; $day <= $days_in_month; $day++)
-                              <th  class='{{ $day == "4" ? "bg-secondary ":""}}'>{{ \Carbon\Carbon::createFromDate($year, $month, $day)->shortDayName }}</th>
-                          @endfor
-                          <th>Total</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           @foreach ($attendance_info as $attendance)
-                              <tr>
-                                 <td rowspan="3">{{ $attendance->em_name }} ({{ $attendance->em_id }})</td>
-                                 <td rowspan="3">{{ $attendance->desig_name }}</td>
-                                 <td>Status</td>
-                                 <td class="{{ $attendance->status === 'Present' ? 'bg-green' : ($attendance->status === 'Late' ? 'bg-warning' : ($attendance->status === 'Absent' ? 'bg-danger' : '')) }}">{{ $attendance->status }}</td>
+       
 
-                                    {{ $attendance->status }}
+
+         <table class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr class="text-center">
+            <th rowspan="2">Name</th>
+            <th rowspan="2">Designation</th>
+            <th rowspan="2">Time</th>
+            @for ($day = 1; $day <= $days_in_month; $day++)
+                <th rowspan="1" class='{{ $day == 4 ? "bg-secondary" : "" }}'>{{ $day }}</th>
+            @endfor
+            <th rowspan="1">Total</th>
+        </tr>
+        <tr>
+            @for ($day = 1; $day <= $days_in_month; $day++)
+                <th class='{{ $day == 4 ? "bg-secondary" : "" }}'>{{ \Carbon\Carbon::createFromDate($year, $month, $day)->shortDayName }}</th>
+            @endfor
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @php $prev_em_id = null; $status_cells = []; $in_cells = []; $out_cells = []; @endphp
+
+        @foreach ($attendance_info as $attendance)
+            @if ($attendance->employeeId !== $prev_em_id && $prev_em_id !== null)
+                <tr>
+                    <td rowspan="3">{{ $prev_em_name }} ({{ $prev_em_id }})</td>
+                    <td rowspan="3">{{ $prev_desig_name }}</td>
+                    <td>Status</td>
+                    <!-- @foreach ($status_cells as $status_cell)
+                        <td>{{ $status_cell }}</td>
+                    @endforeach -->
+
+                    @for ($day = 1; $day <= $days_in_month; $day++)
+                           
+
+                           @if ($attendance_date == $day)
+                           @foreach ($status_cells as $status_cell)
+                                 <td class="{{$status_cell === 'Present' ? 'bg-green' : ($status_cell === 'Late' ? 'bg-warning' : ($status_cell === 'Absent' ? 'bg-danger' : '')) }}">
+                                 {{ $status_cell }}
                                  </td>
-                                 <!-- Add table cells for each day's attendance -->
-                                 @for ($day = 1; $day <= $days_in_month; $day++)
-                                    <td>
-                                       {{ $attendance->status }}
-                                    </td>
-                                 @endfor
-                              </tr>
-                              <tr>
-                                 <td>IN</td>
-                                 <td class="{{ strtotime($attendance->timeIn) <= strtotime('10:30:30') ? 'bg-green' : 'bg-danger' }}">{{ date('h:i A', strtotime($attendance->timeIn)) }}</td>
-
-                                 <!-- Add table cells for each day's attendance -->
-                                 @for ($day = 1; $day <= $days_in_month; $day++)
-                                    <td>
-                                       <!-- You can populate the attendance data here -->
-                                    </td>
-                                 @endfor
-                              </tr>
-                              <tr>
-                                 <td>OUT</td>
-                                 <td class="{{ strtotime($attendance->timeOut) >= strtotime('06:30:00') && strtotime($attendance->timeOut) <= strtotime('07:45:00') ? 'bg-green' : ( strtotime($attendance->timeOut) >= strtotime('7:46:00') ? 'bg-info' : 'bg-warning' ) }}">
-                                    {{ date('h:i A', strtotime($attendance->timeOut)) }}
+                                 @endforeach
+                                 
+                           @else
+                                 <td>
+                                    {{-- Display some default value --}}
                                  </td>
-                                 <!-- Add table cells for each day's attendance -->
-                                 @for ($day = 1; $day <= $days_in_month; $day++)
-                                    <td>
-                                       <!-- You can populate the attendance data here -->
-                                    </td>
-                                 @endfor
-                              </tr>
-                           @endforeach
-                        </tbody>
-                     </table>
+                           @endif
+                        @endfor
+                    
+                </tr>
+                <tr>
+                  
+                    <td>IN</td>
+                    <!-- @foreach ($in_cells as $in_cell)
+                        <td>{{ $in_cell }}</td>
+                    @endforeach -->
+
+                    @for ($day = 1; $day <= $days_in_month; $day++)
+                           
+
+                           @if ($attendance_date == $day)
+                           @foreach ($in_cells as $in_cell)
+                           <td class="{{ strtotime($in_cell) <= strtotime('10:30:00') ? 'bg-green' : (strtotime($in_cell) <= strtotime('11:00:00') ? 'bg-warning' : 'bg-danger') }}">
+                              {!! $in_cell !!}
+                           </td>
+
+                                 @endforeach
+                           @else
+                                 <td>
+                                    {{-- Display some default value --}}
+                                 </td>
+                           @endif
+                        @endfor
+                   
+                </tr>
+                <tr>
+                    <td>OUT</td>
+                    <!-- @foreach ($out_cells as $out_cell)
+                        <td>{{ $out_cell }}</td>
+                    @endforeach -->
+
+                    @for ($day = 1; $day <= $days_in_month; $day++)
+                          
+
+                           @if ($attendance_date == $day)
+                           @foreach ($out_cells as $out_cell)
+                                 <td class="{{ strtotime($attendance->timeOut) >= strtotime('18:30:00') && strtotime($attendance->timeOut) <= strtotime('19:50:00') ? 'bg-green' : 'bg-info' }}">
+                                 {!! $out_cell !!}
+                                 </td>
+                                 @endforeach
+                           @else
+                                 <td>
+                                    {{-- Display some default value --}}
+                                 </td>
+                           @endif
+                        @endfor
+                    
+                </tr>
+
+                @php $status_cells = []; $in_cells = []; $out_cells = []; @endphp
+            @endif
+
+            @php
+                $attendance_date = \Carbon\Carbon::createFromFormat('Y-m-d', $attendance->date)->format('j');
+                $status_cells[] = $attendance->status;
+
+                $in_cells[] = strtotime($attendance->timeIn) <= strtotime('10:30:30') ? ' <span class="bg-green">' . date('h:i A', strtotime($attendance->timeIn)) . '</span>' : ' <span class="bg-danger">' . date('h:i A', strtotime($attendance->timeIn)) . '</span>';
+
+                $out_cells[] = (strtotime($attendance->timeOut) >= strtotime('18:30:00') && strtotime($attendance->timeOut) <= strtotime('19:50:00')) ? ' <span class="bg-green">' . date('h:i A', strtotime($attendance->timeOut)) . '</span>' : ' <span class="bg-info">' . date('h:i A', strtotime($attendance->timeOut)) . '</span>';
+
+                $prev_em_id = $attendance->em_id;
+                $prev_em_name = $attendance->em_name;
+                $prev_desig_name = $attendance->desig_name;
+            @endphp
+        @endforeach
+
+        <!-- Final row for the last employee -->
+        <tr>
+            <td rowspan="3">{{ $prev_em_name }} ({{ $prev_em_id }})</td>
+            <td rowspan="3">{{ $prev_desig_name }}</td>
+            <td>Status</td>
+            <!-- @foreach ($status_cells as $status_cell)
+                <td>{{ $status_cell }}</td>
+            @endforeach -->
+            @for ($day = 1; $day <= $days_in_month; $day++)
+                           
+
+                           @if ($attendance_date == $day)
+                           @foreach ($status_cells as $status_cell)
+                                 <td class="{{$status_cell === 'Present' ? 'bg-green' : ($status_cell === 'Late' ? 'bg-warning' : ($status_cell === 'Absent' ? 'bg-danger' : '')) }}">
+                                    {{ $status_cell  }}
+                                 </td>
+                                 @endforeach
+                                 
+                           @else
+                                 <td>
+                                    {{-- Display some default value --}}
+                                 </td>
+                           @endif
+                        @endfor
+            
+        </tr>
+        <tr>
+            <td>IN</td>
+            <!-- @foreach ($in_cells as $in_cell)
+                <td>{!! $in_cell !!}</td>
+            @endforeach -->
+
+            @for ($day = 1; $day <= $days_in_month; $day++)
+                           
+
+                           @if ($attendance_date == $day)
+                           @foreach ($in_cells as $in_cell)
+                           <td class="{{ strtotime($in_cell) <= strtotime('10:30:00') ? 'bg-green' : (strtotime($in_cell) <= strtotime('11:00:00') ? 'bg-warning' : 'bg-danger') }}">
+                              {!! $in_cell !!}
+                           </td>
+
+                                 @endforeach
+                           @else
+                                 <td>
+                                    {{-- Display some default value --}}
+                                 </td>
+                           @endif
+                        @endfor
+            
+        </tr>
+        <tr>
+            <td>OUT</td>
+            <!-- @foreach ($out_cells as $out_cell)
+                <td>{!! $out_cell !!}</td>
+            @endforeach -->
+
+            @for ($day = 1; $day <= $days_in_month; $day++)
+                          
+
+                           @if ($attendance_date == $day)
+                           @foreach ($out_cells as $out_cell)
+                                 <td class="{{ strtotime($attendance->timeOut) >= strtotime('18:30:00') && strtotime($attendance->timeOut) <= strtotime('19:50:00') ? 'bg-green' : 'bg-info' }}">
+                                 {!! $out_cell !!}
+                                 </td>
+                                 @endforeach
+                           @else
+                                 <td>
+                                    {{-- Display some default value --}}
+                                 </td>
+                           @endif
+                        @endfor
+           
+        </tr>
+    </tbody>
+</table>
+
+
+
           </div>
           <!-- /.card-body -->
         </div>
@@ -192,4 +327,4 @@ printButton.addEventListener('click', printContent);
 
 
 
-@endsection   
+@endsection
